@@ -4,7 +4,7 @@
   <title><![CDATA[gemire's space]]></title>
   <link href="http://hengzhang.me/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-12T22:55:35+08:00</updated>
+  <updated>2015-11-12T23:09:12+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -174,7 +174,8 @@ Functional Programming&ndash;Advanced R 这本书这样定义闭包：</p>
 <ul>
 <li><p>动态作用域</p>
 
-<p>i的值取决于函数调用时上下文中i的值。比如 i = 3, 此时函数的值为f(8)=log(8)+3;
+<p>i的值取决于函数调用时上下文中i的值。
+比如 i = 3, 此时函数的值为f(8)=log(8)+3;<br/>
 动态作用域存在一个问题，即以相同的参数调用函数，得到的返回值未必相同，其返回值还取决于上下文中i的值。如i的值在两次函数调用之间发生改变，则返回值不同。</p></li>
 <li><p>词法作用域
 i的值取决于函数定义时上下文中i的值。
