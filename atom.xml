@@ -4,7 +4,7 @@
   <title><![CDATA[gemire's space]]></title>
   <link href="http://hengzhang.me/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-12T23:09:12+08:00</updated>
+  <updated>2015-11-12T23:16:52+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -172,13 +172,12 @@ Functional Programming&ndash;Advanced R 这本书这样定义闭包：</p>
 关于如何得到变量i的值，有两种方法：</p>
 
 <ul>
-<li><p>动态作用域</p>
-
-<p>i的值取决于函数调用时上下文中i的值。
+<li><p>动态作用域<br/>
+i的值取决于函数调用时上下文中i的值。<br/>
 比如 i = 3, 此时函数的值为f(8)=log(8)+3;<br/>
 动态作用域存在一个问题，即以相同的参数调用函数，得到的返回值未必相同，其返回值还取决于上下文中i的值。如i的值在两次函数调用之间发生改变，则返回值不同。</p></li>
-<li><p>词法作用域
-i的值取决于函数定义时上下文中i的值。
+<li><p>词法作用域<br/>
+i的值取决于函数定义时上下文中i的值。<br/>
 比如</p></li>
 </ul>
 
@@ -255,13 +254,12 @@ value = f(3)
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>这里的赋值语句即把`myDecorator`这个函数的返回值，即一个新的函数对象又传给了func这个变量，这时再去执行`func（）`，得到的其实是myDecorator返回的那个函数对象的执行结果了。  
-请注意，decorator必须得返回一个函数出来给func,不然后面再调用func()这个函数的时候就会出错！
+<p>这里的赋值语句即把<code>myDecorator</code>这个函数的返回值，即一个新的函数对象又传给了func这个变量，这时再去执行<code>func（）</code>，得到的其实是myDecorator返回的那个函数对象的执行结果了。<br/>
+请注意，decorator必须得返回一个函数出来给func,不然后面再调用func()这个函数的时候就会出错！</p>
 
-看到这里，很多同学可能会有疑问了，`myDecorator`到底长啥样子呀？你也没跟我说。大部分关于Python的example会把myDecorator写成函数的形式，但我认为用类的形式来讲解decorator会使读者更清楚decorator背后运行的机制。
+<p>看到这里，很多同学可能会有疑问了，<code>myDecorator</code>到底长啥样子呀？你也没跟我说。大部分关于Python的example会把myDecorator写成函数的形式，但我认为用类的形式来讲解decorator会使读者更清楚decorator背后运行的机制。</p>
 
-Decorator到底应该做什么？事实上，它可以做任何事情但通常，你会期望被装饰的函数在某一个点被装饰器调用，当然，你不调用也没有任何关系。
-</code></pre>
+<p>Decorator到底应该做什么？事实上，它可以做任何事情但通常，你会期望被装饰的函数在某一个点被装饰器调用，当然，你不调用也没有任何关系。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -296,8 +294,7 @@ Decorator到底应该做什么？事实上，它可以做任何事情但通常�
 </span></code></pre></td></tr></table></div></figure>
 
 
-<pre><code>上面代码的执行结果如下：
-</code></pre>
+<p>上面代码的执行结果如下：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
