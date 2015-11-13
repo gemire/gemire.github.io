@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Machine Learning | gemire's space]]></title>
+  <title><![CDATA[Category: Machine-learning | gemire's space]]></title>
   <link href="http://hengzhang.me/blog/categories/machine-learning/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-13T15:13:25+08:00</updated>
+  <updated>2015-11-13T15:55:30+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[机器学习之Gradient Boosted Regression Trees]]></title>
-    <link href="http://hengzhang.me/blog/2015/04/10/Machine-Learning-Gradient-Boosted-Regression-Tree/"/>
+    <link href="http://hengzhang.me/machine-learning/2015/04/10/Machine-Learning-Gradient-Boosted-Regression-Tree/"/>
     <updated>2015-04-10T10:25:00+08:00</updated>
-    <id>http://hengzhang.me/blog/2015/04/10/Machine-Learning-Gradient-Boosted-Regression-Tree</id>
+    <id>http://hengzhang.me/machine-learning/2015/04/10/Machine-Learning-Gradient-Boosted-Regression-Tree</id>
     <content type="html"><![CDATA[<p>实验室在做一个电力相关的大数据项目。现在项目的需求是做一个回归，用来预测温度，湿度和泄露电流之间的关系。数据的格式如下：
 <code>
     8.0   184.0  143.0
