@@ -1,105 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  <title>6 Harsh Truths That Will Make You a Better Person - gemire's space</title>
-  <meta name="author" content="gemire">
-
-  
-  <meta name="description" content="如果你的英文水平不错的话，建议阅读原文。 正如我们每天做有许多要去做的想法，但总是被各种借口打断。古语说：“歇事难奋”，有想法，就要定下目标，在规定时间坚决完成，杀掉自己想找的借口。突然想到了周昆教授在我们学院研究生新生开学典礼上的一句话： 做事情更重要的是做到专而精，而不是广而不懂。 &hellip;">
-  
-
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><![CDATA[Category: Think | gemire's space]]></title>
+  <link href="http://hengzhang.me/blog/categories/think/atom.xml" rel="self"/>
+  <link href="http://hengzhang.me/"/>
+  <updated>2015-11-13T15:13:25+08:00</updated>
+  <id>http://hengzhang.me/</id>
+  <author>
+    <name><![CDATA[gemire]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
 
   
-  <link rel="canonical" href="http://hengzhang.me/blog/2015/03/07/6-harsh-truths-that-will-make-you-a-better-person/">
-  <link href="/favicon.png" rel="icon">
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="gemire's space" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
-<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+  <entry>
+    <title type="html"><![CDATA[如何深入思考]]></title>
+    <link href="http://hengzhang.me/blog/2015/05/31/how-to-think-concisely/"/>
+    <updated>2015-05-31T22:30:00+08:00</updated>
+    <id>http://hengzhang.me/blog/2015/05/31/how-to-think-concisely</id>
+    <content type="html"><![CDATA[<p>首先让我们来看一个很常见的问题：一名计算机专业的学生经常会遇到是该深入学习一门编程语言，还是该多学几门语言来增长见识这样一个问题，有经验的人通常会建议他深入学习一门语言，往往在你深入探索一个领域的知识时，你才有可能突破你的瓶颈，成为更专业的人才，对于其他任何专业都是同样的道理。对于思维的训练更是如此，一个能一秒钟看清事物本质的人和一个花了半年时间才恍然大悟的人，他们的人生自然是不一样的。提升思维的深刻性，对于我们的成长大有裨益。</p>
 
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-60531137-1']);
-    _gaq.push(['_trackPageview']);
+<p>极简主义，可以提升思维的深刻性。你或许不可以增长你的智商，但可以简化你的问题。在我们遇到问题的时候，往往在定性问题是什么的时候可以看出一个人思维水平。你对这个问题是什么厘得清了，才能把这件事情做好。当然，实际情况往往是在我们做事情的某一个瞬间，才会对问题的本质有初步的认识，因此我们才需要不遗余力的提升自己的思维水平，以达到可以快速定义出问题是什么的境界。</p>
 
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
+<!--more-->
 
 
-</head>
+<p>深刻思维，认清问题本质的三个方法：</p>
 
-<body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">gemire's space</a></h1>
-  
-    <h2 style="padding-top: 5px;">迷津欲有问, 横舟渡归人.</h2>
-  
-</hgroup>
+<ul>
+<li>善于用比喻－－隐喻与类比
 
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
+<ul>
+<li>比喻是认清问题本质的最常用方法，例子比比皆是。
+
+<ul>
+<li>成语：雪中送炭，叶公好龙</li>
+<li>谚语：一个和尚挑水喝，两个和尚抬水喝，三个和尚没水喝，</li>
+<li>寓言：狼来了，</li>
+<li>段子<br/>
+这些都可以在当今社会找到原型。把一些复杂的社会现象，一些复杂的问题用一些成语谚语等简洁明了的表达出来，可以快速提升我们认清问题本质的能力。</li>
 </ul>
-  
-<form action="https://www.google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="sitesearch" value="hengzhang.me">
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+</li>
+<li>联想力</li>
+<li>知识面广<br/>
+在当今微博微信知乎等快餐式的阅读时代，多读书还是很重要的，前提是你要读好书。一本好书可以影响你思考的方式，提升你的精神境界，同时也可以使你不被一些乱七八糟的节目所遮住了双眼，轻信一些有悖某些专业领域的常识，但你却不知道的事情。</li>
+</ul>
+</li>
+<li>教学相长－－用举例、设问与反问来推进说明
+
+<ul>
+<li>永远不要和一个白痴争论，因为他会把你的智商拉到同一水平，再用丰富的经验打败你</li>
+<li>讲故事</li>
+<li>不断地采用设问/反问方式</li>
+<li>教是最好的学</li>
+</ul>
+</li>
+<li>强调应用－－了解问题对应的物理特征</li>
 </ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div>
-<article class="hentry" role="article">
+
+<p> 简化，简化再简化</p>
+
+<p>用简单的一句话，一个词把一件事情的本质说清楚，这个能力很重要，甚至比你发出一篇top论文还重要<br/>
+了解抽象前事物的来源，了解一个概念的发展历史，对于我们的学习很重要</p>
+
+<p>做聪明人，花笨功夫<br/>
+不搏二兔<br/>
+All in<br/>
+一万小时</p>
+
+<p>怎么做</p>
+
+<ul>
+<li><p>摸索阶段：</p>
+
+<ul>
+<li>认清自身，是自己特长与兴趣吗？</li>
+<li>观察全局，增加思维洞察力，寻找风口</li>
+<li>提升能力</li>
+</ul>
+</li>
+<li><p>准备阶段：</p>
+
+<ul>
+<li>确立目标</li>
+<li>学习；研究；积累资源（做特种部队，克服冷启动）</li>
+</ul>
+</li>
+<li><p>执行阶段：</p>
+
+<ul>
+<li>All in</li>
+<li>Enjoy</li>
+</ul>
+</li>
+</ul>
+
+
+<p>培养大视野的方法</p>
+
+<ul>
+<li>回顾你这个领域最好的教科书，教科书是远古的最好论文的集合</li>
+<li>多看论文，但只看最好的论文（各领域的顶级会议与顶级期刊）</li>
+<li>顶级期刊、会议一篇文章>>普通期刊、会议10篇文章</li>
+<li><p>顶级期刊、会议的顶级文章>>顶级期刊、会议的其他文章</p></li>
+<li><p>多看创业网站（TechCrunch、36Kr),知道最新的系统和应用</p></li>
+<li>多看著名研究团队的主页、博客</li>
+<li>多看github上开源项目的介绍</li>
+</ul>
+
+
+<p>学会享受寂寞、接受失败<br/>
+享受寂寞，每天踏踏实实地做好工作<br/>
+培养勇于探索，承受挫折的精神和能力<br/>
+要有耐心<br/>
+失败是必然的，成功是偶然的<br/>
+好在一次成功能够弥补之前相应的失败<br/>
+克服心理上的完美主义倾向</p>
+
+<p>推荐书目：</p>
+
+<ul>
+<li>从一到无穷大</li>
+<li>赤裸裸的经济学</li>
+<li>数学之美</li>
+<li>乔布斯的魔力演讲</li>
+</ul>
+
+]]></content>
+  </entry>
   
-  <header>
-    
-      <h1 class="entry-title">6 Harsh Truths That Will Make You a Better Person</h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-03-07T18:30:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:30 pm</span></time>
-        <!---->
-        
-        | <a href="#comments">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-<div class="entry-content"><p>如果你的英文水平不错的话，建议阅读<a href="http://www.cracked.com/blog/6-harsh-truths-that-will-make-you-better-person/">原文</a>。 正如我们每天做有许多要去做的想法，但总是被各种借口打断。古语说：“歇事难奋”，有想法，就要定下目标，在规定时间坚决完成，杀掉自己想找的借口。突然想到了周昆教授在我们学院研究生新生开学典礼上的一句话：</p>
+  <entry>
+    <title type="html"><![CDATA[6 Harsh Truths That Will Make You a Better Person]]></title>
+    <link href="http://hengzhang.me/blog/2015/03/07/6-harsh-truths-that-will-make-you-a-better-person/"/>
+    <updated>2015-03-07T18:30:00+08:00</updated>
+    <id>http://hengzhang.me/blog/2015/03/07/6-harsh-truths-that-will-make-you-a-better-person</id>
+    <content type="html"><![CDATA[<p>如果你的英文水平不错的话，建议阅读<a href="http://www.cracked.com/blog/6-harsh-truths-that-will-make-you-better-person/">原文</a>。 正如我们每天做有许多要去做的想法，但总是被各种借口打断。古语说：“歇事难奋”，有想法，就要定下目标，在规定时间坚决完成，杀掉自己想找的借口。突然想到了周昆教授在我们学院研究生新生开学典礼上的一句话：</p>
 
 <blockquote><p>做事情更重要的是做到专而精，而不是广而不懂。一定要先精于某件事，在你的单位能不能做到No.1,这个非常重要，它决定你的生存问题。</p></blockquote>
 
@@ -275,137 +311,7 @@
 <p>关键在于：我不希望你把眼光放在某个过高的目标上，我希望你专注于获得一样新的， 对其他人有用的技能和经验。</p>
 
 <p>“我没钱参加烹饪班”，那就tmd给我Google“如何烹饪”。我的天，拜托你戒掉这些借口，否则这些借口就要你命了。（You have to kill those excuses, or they will kill you）</p>
-</div>
-
-
-  <footer>
-    <p class="meta">
-      
+]]></content>
+  </entry>
   
-
-<span class="byline author vcard">Posted by <span class="fn">gemire</span></span>
-
-      
-
-
-
-
-<time class='entry-date' datetime='2015-03-07T18:30:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>6:30 pm</span></time>
-      
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/think/'>Think</a>
-  
-</span>
-
-
-    </p>
-    
-      <div class="sharing">
-  
-  
-  
-</div>
-
-    
-    <p class="meta">
-      
-      
-        <a class="basic-alignment right" href="/blog/2015/04/10/Machine-Learning-Gradient-Boosted-Regression-Tree/" title="Next Post: 机器学习之Gradient Boosted Regression Trees">机器学习之Gradient Boosted Regression Trees &raquo;</a>
-      
-    </p>
-  </footer>
-</article>
-<!---->
-
-  
-  <section>
-    <h1>Comments</h1>
-    <div id="comments" aria-live="polite"><!-- Duoshuo Comment BEGIN -->
-<div class="ds-thread" data-title="6 Harsh Truths That Will Make You a Better Person"></div>
-<script type="text/javascript">
-    var duoshuoQuery = {short_name:"gemire"};
-    (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = 'http://static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- Duoshuo Comment END --></div>
-  </section>
-  
-
-</div>
-
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2015/11/10/python-decorators/">Python Decorators Step by Step</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/05/31/how-to-think-concisely/">如何深入思考</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/18/experience-with-project-debug/">记一次项目排错经历</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/10/Machine-Learning-Gradient-Boosted-Regression-Tree/">机器学习之Gradient Boosted Regression Trees</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/07/6-harsh-truths-that-will-make-you-a-better-person/">6 Harsh Truths That Will Make You a Better Person</a>
-      </li>
-    
-  </ul>
-</section>
-<section>
-    <h1>Categories</h1>
-    <ul id="categories">
-        <li class='category'><a href='/blog/categories/java/'>Java (1)</a></li>
-<li class='category'><a href='/blog/categories/machine-learning/'>Machine Learning (1)</a></li>
-<li class='category'><a href='/blog/categories/python/'>Python (1)</a></li>
-<li class='category'><a href='/blog/categories/think/'>Think (2)</a></li>
-
-    </ul>
-</section>
-
-
-
-
-  
-</aside>
-
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - gemire -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
-</p>
-
-</footer>
-  
-
-
-
-
-
-
-
-
-
-
-
-</body>
-</html>
+</feed>

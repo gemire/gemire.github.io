@@ -26,4 +26,16 @@
   <url>
     <loc>http://hengzhang.me/</loc>
   </url>
+  <url>
+    <loc>http://hengzhang.me/blog/categories/think/</loc>
+  </url>
+  <url>
+    <loc>http://hengzhang.me/blog/categories/machine-learning/</loc>
+  </url>
+  <url>
+    <loc>http://hengzhang.me/blog/categories/java/</loc>
+  </url>
+  <url>
+    <loc>http://hengzhang.me/blog/categories/python/</loc>
+  </url>
 </urlset>

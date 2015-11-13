@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Python | gemire's space]]></title>
+  <link href="http://hengzhang.me/blog/categories/python/atom.xml" rel="self"/>
+  <link href="http://hengzhang.me/"/>
+  <updated>2015-11-13T15:13:25+08:00</updated>
+  <id>http://hengzhang.me/</id>
+  <author>
+    <name><![CDATA[gemire]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Python Decorators Step by Step]]></title>
+    <link href="http://hengzhang.me/blog/2015/11/10/python-decorators/"/>
+    <updated>2015-11-10T00:00:00+08:00</updated>
+    <id>http://hengzhang.me/blog/2015/11/10/python-decorators</id>
+    <content type="html"><![CDATA[<p>Decorator绝对是Python语言most powerful的特性之一。熟悉设计模式的人可能认为Python的Decorator就是装饰器模式，事实上，python的decorator确实可以用来实现装饰器模式，但仅仅止步于此，是不能够真正使用好python的decorator的。</p>
+
+<h2>用 decorators 可以做什么?</h2>
+
+<p>   类似于Java的AOP, python的decorator允许我们在不修改原来函数或者类的代码的情况，动态的为我们的函数或者类增加新的功能。比如说，有100个函数，你想统计每一个函数执行的时间，想一下你会怎么做？是在每一个函数执行的前后分别获取当前系统的时间吗？No, 一个靠谱的程序员是尽量不会让他的代码重复的，何况这里有100次之多。扩大一下问题的规模，比如说现在有1000个，10000个，用上面提到的方法的话，你能保证不出错？
+   <!--more--></p>
+
+<p>   当我们使用decorator的时候，你可以这样做：</p>
+
+<pre><code class="python">from datetime import datetime
+
+@entryExit
+def func1():
+    #do something
+
+@entryExit
+def func2():
+    #do something
+
+def entryExit(func):
+    def wrapper():
+        print("Entering {0}".format(func.__name__))
+        start = datetime.now()
+        func()
+        end = datetime.now()
+        print("Exiting {0}".format(func.__name__))
+        print("The total time of execution of {0} is: {1}".format(func.__name__, end - start))
+    return wrapper
+</code></pre>
+
+<p>   换句话说，你只需要在每一个函数的前面添加一个类似Java的注解就OK了，方便吧。函数定义的上边新加的一行'@entryExit'意味着对下面定义的这个函数应用entryExit decorator.</p>
+
+<h2>Prerequiste of Python Decorator</h2>
+
+<p>   在开始讲解decorator之前，有一些关于Python函数的基础知识需要掌握下。如果你已经熟悉Closure,可以跳过这一部分。</p>
+
+<p>   作为Python的first class citizen，函数也是对象，这意味着我们可以把函数当做变量来使用。因此，函数可以为其他变量赋值，可以作为其他函数的参数，也可以作为其他函数的返回值。</p>
+
+<h3>Assign functions to variables</h3>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">coding</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="err">“</span><span class="n">coding</span> <span class="k">with</span> <span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="o">+</span><span class="n">name</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">coding_language</span> <span class="o">=</span> <span class="n">coding</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">coding_language</span><span class="p">(</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="n">Scala</span><span class="err">”</span><span class="p">))</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">Outputs</span><span class="p">:</span> <span class="n">coding</span> <span class="k">with</span> <span class="n">Scala</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>Define functions inside other functions</h3>
+
+<pre><code class="python">def coding(name):
+    def get_message():
+        return “coding with “
+    result = get_message() + name
+    return result
+print(coding(“Scala”))
+
+#Outputs: coding with Scala
+</code></pre>
+
+<h3>Functions can be passed as parameters to other functions</h3>
+
+<pre><code class="python">def coding(name):
+    return “coding with “ + name
+def call_func(func):
+    other_name = “Rust”
+    return func(other_name)
+print call_func(“Scala”)
+#Outputs: coding with Scala
+</code></pre>
+
+<h3>Functions can return other functions</h3>
+
+<p>也就是说，函数可以generate其他的函数</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">compose_coding_func</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">get_message</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">return</span> <span class="err">“</span><span class="n">coding</span> <span class="k">with</span> <span class="n">Rust</span><span class="err">”</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">pre</span><span class="o">&gt;&lt;</span><span class="n">code</span><span class="o">&gt;</span><span class="k">return</span> <span class="n">get_message</span><span class="p">()</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">code</span><span class="o">&gt;&lt;/</span><span class="n">pre</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">coding_language</span> <span class="o">=</span> <span class="n">compose_coding_func</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">coding_language</span><span class="p">())</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span><span class="n">outpouts</span><span class="p">:</span> <span class="n">coding</span> <span class="k">with</span> <span class="n">Rust</span><span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<h3>Inner functions have access to the enclosing scope</h3>
+
+<p>也即更广为人知的闭包概念。闭包是Python的decorator如此强大背后的支撑技术之一。
+Functional Programming&ndash;Advanced R 这本书这样定义闭包：</p>
+
+<blockquote><p> An object is data with functions. A closure is a function with data.” — John D. Cook</p></blockquote>
+
+<p>可以这样来理解闭包：
+以大家都熟悉的数学公式来举例。已知函数f(x) = log(x) + i, 其中i已经定义好的变量。要求 x = 8时函数f(x)的值f(8).此时等式f(8)=log(8)+i。要得到函数f(8)的值，我们需要知道变量i的值。若能够从函数的上下文得到i=1, 则可以得到f(8)=log(8)+1, 即若想得到函数值, 必须捕获i的值，这一过程可以理解为对函数执行“关闭”操作，所以叫做闭包。
+关于如何得到变量i的值，有两种方法：</p>
+
+<ul>
+<li><p>动态作用域<br/>
+i的值取决于函数调用时上下文中i的值。<br/>
+比如 i = 3, 此时函数的值为f(8)=log(8)+3;<br/>
+动态作用域存在一个问题，即以相同的参数调用函数，得到的返回值未必相同，其返回值还取决于上下文中i的值。如i的值在两次函数调用之间发生改变，则返回值不同。</p></li>
+<li><p>词法作用域<br/>
+i的值取决于函数定义时上下文中i的值。<br/>
+比如</p></li>
+</ul>
+
+
+<pre><code>g(i) = lambda x : x + i;
+f = g(2)
+</code></pre>
+
+<p>这里函数f返回一个和上面函数f形式一样的函数，i在此处为2， 那么执行
+value = f(3)
+得到的value值为5.</p>
+
+<p> 以Pyton代码为例：</p>
+
+<pre><code class="python">def g(i):
+  return lambda x : x + i
+f = g(2)
+print(f(3))
+#Outputs: 5
+</code></pre>
+
+<p>在这里f要‘记住’自己定义时 i 的值为2， 所以Python解释器在解释时，<strong>f(x) = x + i 和 i = 2 被打包在一起，也即‘闭包’</strong>， 意思是它是独立且完整的，仅仅依靠调用时传递给函数的参数来求值，不再依赖函数调用时的上下文。
+需要说明的是，Python的闭包只支持outer scope变量的读操作，不支持out scope变量的赋值操作。</p>
+
+<pre><code class="python">def compose_coding_func(name):
+   def get_message():
+    return “Hello programming language “ + name + “!”
+
+   return get_message
+
+coding = compose_coding_func(’Rust’)
+print(coding())
+#Outputs: Hello programming language Rust!
+</code></pre>
+
+<h2>Decorator是什么？</h2>
+
+<p>   本质上，python的decorator是一个参数为函数，并且返回值也为函数的函数，也即函数式编程里面的higher order function。</p>
+
+<p>   当在函数定义开始之前加上类似<code>@myDecorator</code>的语句，即代表给这个函数应用了<code>myDecorator</code>装饰器。这也是Python函数装饰器的语法糖，用起来非常方便，不是吗？</p>
+
+<pre><code class="python">@myDecorator
+def func():
+   print(“inside func”)
+</code></pre>
+
+<p>   上面是我们写的第一个函数装饰器，当这段代码经过解释后，<code>func()</code> 被解释，得到的函数对象（注意，函数本身也是对象，一切皆对象）作用参数传递给<code>myDecorator</code>。我们在上面说过了，装饰器本身也是一个函数，无非其比较特殊，其接收的参数是一个函数对象，并且也返回一个函数。在这里，<code>myDecorator</code> 这个函数，也就是装饰器，做了一些该做的事情，并且最终返回一个函数，用来替换刚开始传进来的<code>func()</code>函数。为什么这样说？是因为Python解释器会将上面的代码解释为下面这个样子：</p>
+
+<pre><code class="python">func = myDecorator(func)
+</code></pre>
+
+<p>这里的赋值语句即把<code>myDecorator</code>这个函数的返回值，即一个新的函数对象又传给了func这个变量，这时再去执行<code>func（）</code>，得到的其实是myDecorator返回的那个函数对象的执行结果了。<br/>
+请注意，decorator必须得返回一个函数出来给func,不然后面再调用func()这个函数的时候就会出错！</p>
+
+<p>看到这里，很多同学可能会有疑问了，<code>myDecorator</code>到底长啥样子呀？你也没跟我说。大部分关于Python的example会把myDecorator写成函数的形式，但我认为用类的形式来讲解decorator会使读者更清楚decorator背后运行的机制。</p>
+
+<p>Decorator到底应该做什么？事实上，它可以做任何事情但通常，你会期望被装饰的函数在某一个点被装饰器调用，当然，你不调用也没有任何关系。</p>
+
+<pre><code class="python">class myDecorator(object):
+    def __init__(self, func):
+        print(“inside myDecorator.__init__()”
+        func()  #prove that function definition has completed
+
+    def __call__(self):
+        print(“insice myDecorator.__call__”)
+
+
+@myDecorator
+def func():
+    print(“inside func()”)
+
+print(“Finished decorating function func()”)
+func()
+</code></pre>
+
+<p>上面代码的执行结果如下：</p>
+
+<pre><code>inside myDecorator.__init__()
+inside func()
+Finished decorating function func()
+inside myDecorator.__call__()
+</code></pre>
+
+<p>我们可以看到myDecorator这个类的构造器在装饰函数时即被执行。由于我们在<strong>init</strong>()这个构造器里面调用了<code>func()</code>函数，通过结果我们也可以得到函数func()在装饰器被调用之前已经被定义完成。需要注意的是myDecorator这个类的构造器里面调用了<code>func()</code>函数。</p>
+
+<p>​</p>
+]]></content>
+  </entry>
+  
+</feed>
