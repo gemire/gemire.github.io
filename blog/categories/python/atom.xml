@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | gemire's space]]></title>
   <link href="http://hengzhang.me/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-15T22:25:37+08:00</updated>
+  <updated>2015-11-15T22:27:06+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Python Decorators Step by Step (I）]]></title>
+    <title type="html"><![CDATA[Python Decorators Step by Step (I)]]></title>
     <link href="http://hengzhang.me/python/2015/11/10/python-decorators_1/"/>
     <updated>2015-11-10T00:00:00+08:00</updated>
     <id>http://hengzhang.me/python/2015/11/10/python-decorators_1</id>
