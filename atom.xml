@@ -4,7 +4,7 @@
   <title><![CDATA[gemire's space]]></title>
   <link href="http://hengzhang.me/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-14T18:41:07+08:00</updated>
+  <updated>2015-11-15T22:25:37+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Python Decorators Step by Step]]></title>
-    <link href="http://hengzhang.me/python/2015/11/10/python-decorators/"/>
+    <title type="html"><![CDATA[Python Decorators Step by Step (I）]]></title>
+    <link href="http://hengzhang.me/python/2015/11/10/python-decorators_1/"/>
     <updated>2015-11-10T00:00:00+08:00</updated>
-    <id>http://hengzhang.me/python/2015/11/10/python-decorators</id>
+    <id>http://hengzhang.me/python/2015/11/10/python-decorators_1</id>
     <content type="html"><![CDATA[<p>Decorator绝对是Python语言most powerful的特性之一。熟悉设计模式的人可能认为Python的Decorator就是装饰器模式，事实上，python的decorator确实可以用来实现装饰器模式，但仅仅止步于此，是不能够真正使用好python的decorator的。</p>
 
 <h2>用 decorators 可以做什么?</h2>
@@ -46,25 +46,31 @@
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 </span><span class='line'>
-</span><span class='line'><span class="nd">@entryExit</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">func1</span><span class="p">():</span>
-</span><span class='line'>  <span class="c">#do something</span>
-</span><span class='line'>
-</span><span class='line'><span class="nd">@entryExit</span>
-</span><span class='line'><span class="k">def</span> <span class="nf">func2</span><span class="p">():</span>
-</span><span class='line'>  <span class="c">#do something</span>
-</span><span class='line'>
 </span><span class='line'><span class="k">def</span> <span class="nf">entryExit</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
-</span><span class='line'>          <span class="k">print</span><span class="p">(</span><span class="s">&quot;Entering {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Entering {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 </span><span class='line'>        <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
 </span><span class='line'>        <span class="n">func</span><span class="p">()</span>
 </span><span class='line'>        <span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-</span><span class='line'>      <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
 </span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The total time of execution of {0} is: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">wrapper</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@entryExit</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">func1</span><span class="p">():</span>
+</span><span class='line'>    <span class="c">#do something</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@entryExit</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">func2</span><span class="p">():</span>
+</span><span class='line'>    <span class="c">#do something</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">func1</span><span class="p">()</span>
+</span><span class='line'><span class="n">func2</span><span class="p">()</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -139,7 +145,7 @@
 
 <p>也就是说，函数可以generate其他的函数</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -257,6 +263,8 @@ value = f(3)
 <p>这里的赋值语句即把<code>myDecorator</code>这个函数的返回值，即一个新的函数对象又传给了func这个变量，这时再去执行<code>func（）</code>，得到的其实是myDecorator返回的那个函数对象的执行结果了。<br/>
 请注意，decorator必须得返回一个函数出来给func,不然后面再调用func()这个函数的时候就会出错！</p>
 
+<h3>Using Class as Decorators</h3>
+
 <p>看到这里，很多同学可能会有疑问了，<code>myDecorator</code>到底长啥样子呀？你也没跟我说。大部分关于Python的example会把myDecorator写成函数的形式，但我认为用类的形式来讲解decorator会使读者更清楚decorator背后运行的机制。</p>
 
 <p>Decorator到底应该做什么？事实上，它可以做任何事情但通常，你会期望被装饰的函数在某一个点被装饰器调用，当然，你不调用也没有任何关系。</p>
@@ -307,7 +315,153 @@ value = f(3)
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>我们可以看到myDecorator这个类的构造器在装饰函数时即被执行。由于我们在<strong>init</strong>()这个构造器里面调用了<code>func()</code>函数，通过结果我们也可以得到函数func()在装饰器被调用之前已经被定义完成。需要注意的是myDecorator这个类的构造器里面调用了<code>func()</code>函数。</p>
+<p>我们可以看到myDecorator这个类的构造器在装饰函数时即被执行。由于我们在<strong>init</strong>()这个构造器里面调用了<code>func()</code>函数，通过结果我们也可以得到函数func()在装饰器被调用之前已经被定义完成。需要注意的是myDecorator这个装饰器的构造器的参数为需要被装饰的函数对象。一般的用法是通过构造器得到需要被装饰的函数对象，然后在<code>__call__</code>函数里面回调。用类的形式来讲解，Decoration和calling是非常清晰的两个阶段，所以我说用类这种形式来讲解更容易理解。</p>
+
+<p>当函数<code>func</code>经过装饰后，再被调用的时候，我们得到了和预期完全不同的结果。是<code>__call__</code>这个函数真正被调用，而不是原来<code>func</code>函数。装饰函数的执行结果替代了被装饰的函数的执行结果。在我们这个例子中，是<code>myDecorator</code>这个对象替换了<code>func</code>对象。</p>
+
+<p>事实上，如果你不嫌麻烦，也可以这样做：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+</span><span class='line'>  <span class="c">#do something</span>
+</span><span class='line'><span class="n">foo</span> <span class="o">=</span> <span class="n">staticMethod</span><span class="p">(</span><span class="n">foo</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通过Python提供的<code>@decorator</code>语法糖，你可以用下面的代码得到相同的结果：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@staticMethod</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+</span><span class='line'>  <span class="c">#do something</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中，<code>@decorator</code>语法糖的意思是: <strong>传递一个原始函数对象给装饰器（函数），装饰器（函数）返回的函数对象再重新赋给原始的函数对象</strong>。</p>
+
+<p>我认为Pyton函数装饰器如此重要的一个原因是，其通过一个很简单的语法糖，改变了我们对于编程的认知。其通过语法约定，将<code>apply code to other code</code>的概念表现得淋漓尽致。</p>
+
+<p>文章刚开始提到的那个例子用类的形式来写就是：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">entryExit</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+</span><span class='line'>      
+</span><span class='line'>  <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span class='line'>      <span class="k">print</span><span class="p">(</span><span class="s">&quot;Entering {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>      <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span class='line'>      <span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="p">()</span>
+</span><span class='line'>      <span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span class='line'>      <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>      <span class="k">print</span><span class="p">(</span><span class="s">&quot;The total time of execution of {0} is: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>entryExit</code>这个类的构造器将函数对象作为参数，在｀<strong>call</strong><code>这个函数里面，我们利用函数的</code><strong>name</strong>`属性来输出函数的名字，然后调用了被装饰的函数。</p>
+
+<h3>Using Functions as Decorators</h3>
+
+<p>终于讲到使用函数作为装饰器了。我们在开头的例子里使用的正是这里要讲的函数装饰器。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">def</span> <span class="nf">entryExit</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Entering {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">func</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The total time of execution of {0} is: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">wrapper</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@entryExit</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;hello, world&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">func</span><span class="p">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Entering</span> <span class="n">func</span>
+</span><span class='line'><span class="n">hello</span><span class="p">,</span> <span class="n">world</span>
+</span><span class='line'><span class="n">wrapper</span>
+</span><span class='line'><span class="n">Exiting</span> <span class="n">func</span>
+</span><span class='line'><span class="n">The</span> <span class="n">total</span> <span class="n">time</span> <span class="n">of</span> <span class="n">execution</span> <span class="n">of</span> <span class="n">func</span> <span class="ow">is</span><span class="p">:</span> <span class="mi">0</span><span class="p">:</span><span class="mo">00</span><span class="p">:</span><span class="mo">00</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>wrapper</code>函数在<code>entryExit</code>函数体中定义，当<code>entryExit</code>函数被调用的时候，<code>wrapper</code>函数即被创建并返回,替换掉原来的<code>func</code>函数成为“新”的<code>func</code>函数。要注意<code>wrapper</code>是一个closure, 因为它捕获了要被装饰的<code>func</code>函数对象。</p>
+
+<p>同时，我们需要注意的是被装饰的函数<code>func</code>里面<code>print(func__name__)</code>这段代码的执行结果是<code>wrapper</code>, 这是因为在装饰阶段（还记得前面提到过的装饰器工作的两个阶段吗?)被装饰的函数<code>func</code>已经被替换掉了。你完全可以在你返回<code>wrapper</code>函数之前做一点小修改:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">entryExit</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Entering {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">func</span><span class="p">()</span>
+</span><span class='line'>        <span class="n">end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Exiting {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">))</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;The total time of execution of {0} is: {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">__name__</span><span class="p">,</span> <span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">))</span>
+</span><span class='line'>        <span class="n">wrapper</span><span class="o">.</span><span class="n">__name__</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">__name__</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">wrapper</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这样打印出来的函数名字就不再是<code>wrapper</code>, 而是<code>func</code>了。</p>
+
+<p>在下一篇文章里面，我会介绍关于带有参数Python函数装饰器及Python内置的functools模块关于装饰器的内容。</p>
 
 <p>​</p>
 ]]></content>
