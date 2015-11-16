@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | gemire's space]]></title>
   <link href="http://hengzhang.me/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-16T13:40:03+08:00</updated>
+  <updated>2015-11-16T13:47:00+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -15,14 +15,17 @@
   
   <entry>
     <title type="html"><![CDATA[Python Decorators Step by Step (II)]]></title>
-    <link href="http://hengzhang.me/python/2015/11/10/python-decorators_2/"/>
-    <updated>2015-11-10T00:00:00+08:00</updated>
-    <id>http://hengzhang.me/python/2015/11/10/python-decorators_2</id>
+    <link href="http://hengzhang.me/python/2015/11/15/python-decorators_II/"/>
+    <updated>2015-11-15T09:30:00+08:00</updated>
+    <id>http://hengzhang.me/python/2015/11/15/python-decorators_II</id>
     <content type="html"><![CDATA[<p>在上一篇文章里面，我们介绍了没有参数的Decorator, 我们采用类的形式讲解，使大家更容易理解Python装饰器的两个工作阶段。</p>
 
 <h2>Decorators without Arguments</h2>
 
 <p>当我们创建一个没有参数的装饰器的时候，被装饰的函数对象作为参数传给类形式装饰器的构造函数，当被装饰的函数被调用的时候，真正调用的是类形式装饰器的<code>__call__</code>方法。</p>
+
+<!--more-->
+
 
 <pre><code class="python">class decoratorWithoutArguments(object):
 
@@ -193,9 +196,9 @@ after second sayHello() call
   
   <entry>
     <title type="html"><![CDATA[Python Decorators Step by Step (I)]]></title>
-    <link href="http://hengzhang.me/python/2015/11/10/python-decorators_1/"/>
-    <updated>2015-11-10T00:00:00+08:00</updated>
-    <id>http://hengzhang.me/python/2015/11/10/python-decorators_1</id>
+    <link href="http://hengzhang.me/python/2015/11/10/python-decorators_I/"/>
+    <updated>2015-11-10T20:20:00+08:00</updated>
+    <id>http://hengzhang.me/python/2015/11/10/python-decorators_I</id>
     <content type="html"><![CDATA[<p>Decorator绝对是Python语言most powerful的特性之一。熟悉设计模式的人可能认为Python的Decorator就是装饰器模式，事实上，python的decorator确实可以用来实现装饰器模式，但仅仅止步于此，是不能够真正使用好python的decorator的。</p>
 
 <h2>用 decorators 可以做什么?</h2>
