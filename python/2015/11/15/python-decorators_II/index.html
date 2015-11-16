@@ -610,8 +610,6 @@
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
 </pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">tags</span><span class="p">(</span><span class="n">tag_name</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
 </span><span class='line'>    <span class="k">def</span> <span class="nf">tags_decorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
 </span><span class='line'>        <span class="k">def</span> <span class="nf">func_wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
@@ -630,37 +628,36 @@
 </span><span class='line'><span class="k">def</span> <span class="nf">say_hello</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
 </span><span class='line'>  <span class="k">return</span> <span class="s">&quot;hello &quot;</span> <span class="o">+</span> <span class="n">name</span>
 </span><span class='line'>
-</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s">&#39;jack&#39;</span><span class="p">))</span><span class="err"> </span><span class="sb">``</span><span class="err">`</span>
-</span><span class='line'>
-</span><span class='line'><span class="err">输出为：</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">say_hello</span><span class="p">(</span><span class="s">&#39;jack&#39;</span><span class="p">))</span><span class="err"> </span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>ini</p>
-
-<p>hello John</p>
-
-
-<p><a><b>hello jack</b></a></p>
+<p>输出为：</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">在这个例子中，我们可以看到：</span><span class="n">tags</span><span class="err">有一个参数，也就是</span><span class="n">tag</span><span class="err">的名字。</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">hello</span> <span class="n">John</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">a</span><span class="o">&gt;&lt;</span><span class="n">b</span><span class="o">&gt;</span><span class="n">hello</span> <span class="n">jack</span><span class="o">&lt;/</span><span class="n">b</span><span class="o">&gt;&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>python
-@tags(&lsquo;p&rsquo;)
-def get_text(name):
-    return &ldquo;hello &rdquo; + name</p>
+<p>在这个例子中，我们可以看到：tags有一个参数，也就是tag的名字。</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="err">这个函数在执行的时候，背后其实是这样的：</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="nd">@tags</span><span class="p">(</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">get_text</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s">&quot;hello &quot;</span> <span class="o">+</span> <span class="n">name</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>python
-get_text = tags(‘p’)(get_text)
-```</p>
+<p>这个函数在执行的时候，背后其实是这样的：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">get_text</span> <span class="o">=</span> <span class="n">tags</span><span class="p">(</span><span class="err">‘</span><span class="n">p</span><span class="err">’</span><span class="p">)(</span><span class="n">get_text</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <p>是不是函数的柯里化？因此，为了让上面这句代码执行成功，tags函数需要返回一个真正的装饰函数，用来装饰需要被装饰的函数。这也就是带有参数的装饰函数需要三层函数的原因所在了。</p>
 </div>
