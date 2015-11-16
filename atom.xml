@@ -4,7 +4,7 @@
   <title><![CDATA[gemire's space]]></title>
   <link href="http://hengzhang.me/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-15T22:29:21+08:00</updated>
+  <updated>2015-11-16T11:33:01+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -12,6 +12,315 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python Decorators Step by Step (II)]]></title>
+    <link href="http://hengzhang.me/python/2015/11/10/python-decorators_2/"/>
+    <updated>2015-11-10T00:00:00+08:00</updated>
+    <id>http://hengzhang.me/python/2015/11/10/python-decorators_2</id>
+    <content type="html"><![CDATA[<p>在上一篇文章里面，我们介绍了没有参数的Decorator, 我们采用类的形式讲解，使大家更容易理解Python装饰器的两个工作阶段。</p>
+
+<h2>Decorators without Arguments</h2>
+
+<p>当我们创建一个没有参数的装饰器的时候，被装饰的函数对象作为参数传给类形式装饰器的构造函数，当被装饰的函数被调用的时候，真正调用的是类形式装饰器的<code>__call__</code>方法。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">decoratorWithoutArguments</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+</span><span class='line'>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">        If there are no decorator arguments, the function</span>
+</span><span class='line'><span class="sd">        to be decorated is passed to the constructor.</span>
+</span><span class='line'><span class="sd">        &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Inside __init__()&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">f</span> <span class="o">=</span> <span class="n">f</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class='line'>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">        The __call__ method is not called until the</span>
+</span><span class='line'><span class="sd">        decorated function is called.</span>
+</span><span class='line'><span class="sd">        &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Inside __call__()&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;After self.f(*args)&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@decoratorWithoutArguments</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">sayHello</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&#39;sayHello arguments:&#39;</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;After decoration&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;Preparing to call sayHello()&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sayHello</span><span class="p">(</span><span class="s">&quot;say&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;argument&quot;</span><span class="p">,</span> <span class="s">&quot;list&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;After first sayHello() call&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sayHello</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;different&quot;</span><span class="p">,</span> <span class="s">&quot;set of&quot;</span><span class="p">,</span> <span class="s">&quot;arguments&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;After second sayHello() call&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>被装饰的函数如果带有参数的话，其都被传递给<code>__call__</code>函数。</p>
+
+<p>输出结果为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Inside</span> <span class="n">__init__</span><span class="p">()</span>
+</span><span class='line'><span class="n">After</span> <span class="n">decoration</span>
+</span><span class='line'><span class="n">Preparing</span> <span class="n">to</span> <span class="n">call</span> <span class="n">sayHello</span><span class="p">()</span>
+</span><span class='line'><span class="n">Inside</span> <span class="n">__call__</span><span class="p">()</span>
+</span><span class='line'><span class="n">sayHello</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">say</span> <span class="n">hello</span> <span class="n">argument</span> <span class="nb">list</span>
+</span><span class='line'><span class="n">After</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'><span class="n">After</span> <span class="n">first</span> <span class="n">sayHello</span><span class="p">()</span> <span class="n">call</span>
+</span><span class='line'><span class="n">Inside</span> <span class="n">__call__</span><span class="p">()</span>
+</span><span class='line'><span class="n">sayHello</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">a</span> <span class="n">different</span> <span class="nb">set</span> <span class="n">of</span> <span class="n">arguments</span>
+</span><span class='line'><span class="n">After</span> <span class="bp">self</span><span class="o">.</span><span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'><span class="n">After</span> <span class="n">second</span> <span class="n">sayHello</span><span class="p">()</span> <span class="n">call</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>需要注意的一点是, <code>__init__</code>函数只在装饰阶段被调用一次，当我们每调用一次调用被装饰过的<code>sayHello()</code>的时候，是<code>__call__</code>函数被真正调用。</p>
+
+<h2>Decorators with arguments</h2>
+
+<p>在以前的例子中，在装饰阶段传给装饰器的只是一个需要被装饰的函数对象。如果这个地方需要传递其他参数，该如何处理？</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">class</span> <span class="nc">decoratorWithArguments</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">):</span>
+</span><span class='line'>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">        If there are decorator arguments, the function</span>
+</span><span class='line'><span class="sd">        to be decorated is not passed to the constructor!</span>
+</span><span class='line'><span class="sd">        &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Inside __init__()&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">arg1</span> <span class="o">=</span> <span class="n">arg1</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">arg2</span> <span class="o">=</span> <span class="n">arg2</span>
+</span><span class='line'>        <span class="bp">self</span><span class="o">.</span><span class="n">arg3</span> <span class="o">=</span> <span class="n">arg3</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">):</span>
+</span><span class='line'>        <span class="sd">&quot;&quot;&quot;</span>
+</span><span class='line'><span class="sd">        If there are decorator arguments, __call__() is only called</span>
+</span><span class='line'><span class="sd">        once, as part of the decoration process! You can only give</span>
+</span><span class='line'><span class="sd">        it a single argument, which is the function object.</span>
+</span><span class='line'><span class="sd">        &quot;&quot;&quot;</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Inside __call__()&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">def</span> <span class="nf">wrapped_f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class='line'>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Inside wrapped_f()&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Decorator arguments:&quot;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg2</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">arg3</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;After f(*args)&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">wrapped_f</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@decoratorWithArguments</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">sayHello</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&#39;sayHello arguments:&#39;</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;After decoration&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;Preparing to call sayHello()&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sayHello</span><span class="p">(</span><span class="s">&quot;say&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;argument&quot;</span><span class="p">,</span> <span class="s">&quot;list&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;after first sayHello() call&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sayHello</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;different&quot;</span><span class="p">,</span> <span class="s">&quot;set of&quot;</span><span class="p">,</span> <span class="s">&quot;arguments&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;after second sayHello() call&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>从输出结果中，我们可以看到，带有参数的函数装饰器的行为和以前有很大不同：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Inside</span> <span class="n">__init__</span><span class="p">()</span>
+</span><span class='line'><span class="n">Inside</span> <span class="n">__call__</span><span class="p">()</span>
+</span><span class='line'><span class="n">After</span> <span class="n">decoration</span>
+</span><span class='line'><span class="n">Preparing</span> <span class="n">to</span> <span class="n">call</span> <span class="n">sayHello</span><span class="p">()</span>
+</span><span class='line'><span class="n">Inside</span> <span class="n">wrapped_f</span><span class="p">()</span>
+</span><span class='line'><span class="n">Decorator</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">hello</span> <span class="n">world</span> <span class="mi">42</span>
+</span><span class='line'><span class="n">sayHello</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">say</span> <span class="n">hello</span> <span class="n">argument</span> <span class="nb">list</span>
+</span><span class='line'><span class="n">After</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'><span class="n">after</span> <span class="n">first</span> <span class="n">sayHello</span><span class="p">()</span> <span class="n">call</span>
+</span><span class='line'><span class="n">Inside</span> <span class="n">wrapped_f</span><span class="p">()</span>
+</span><span class='line'><span class="n">Decorator</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">hello</span> <span class="n">world</span> <span class="mi">42</span>
+</span><span class='line'><span class="n">sayHello</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">a</span> <span class="n">different</span> <span class="nb">set</span> <span class="n">of</span> <span class="n">arguments</span>
+</span><span class='line'><span class="n">After</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'><span class="n">after</span> <span class="n">second</span> <span class="n">sayHello</span><span class="p">()</span> <span class="n">call</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>需要注意到在装饰阶段<code>__init__</code>函数被调用后，<code>__call__</code>立即被调用了。<code>__call__</code>方法只能接收一个参数，也就是需要被装饰的函数对象，并且必须返回一个经过装饰的函数对象，用来替换被装饰的函数对象。需要注意的是<code>__call__</code>方法只是在装饰阶段被调用一次，在调用阶段是<code>__call__</code>方法返回的函数被真正调用。</p>
+
+<p>带有参数的装饰器采用类的形式时，constructor被用来捕获装饰器的参数，<code>__call__</code>方法不再作为经过装饰的函数对象，取而代之的是，你需要在<code>__call__</code>方法里面定义一个函数来作为被装饰的函数，作为后面函数调用时真正被调用的函数。带参数的装饰器和没有参数的装饰器的代码不太一样，你需要仔细领悟其中的精髓，以不变应万变。</p>
+
+<h2>Decorator Functions with Decorator Arguments</h2>
+
+<p>现在需要看一下比上面稍微复杂一点的带有参数的函数装饰器的实现：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">decoratorFunctionWithArguments</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&quot;Inside wrap()&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">def</span> <span class="nf">wrapped_f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class='line'>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Inside wrapped_f()&quot;</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;Decorator arguments:&quot;</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="n">arg3</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">print</span><span class="p">(</span><span class="s">&quot;After f(*args)&quot;</span><span class="p">)</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">wrapped_f</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">wrap</span>
+</span><span class='line'>
+</span><span class='line'><span class="nd">@decoratorFunctionWithArguments</span><span class="p">(</span><span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;world&quot;</span><span class="p">,</span> <span class="mi">42</span><span class="p">)</span>
+</span><span class='line'><span class="k">def</span> <span class="nf">sayHello</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&#39;sayHello arguments:&#39;</span><span class="p">,</span> <span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">,</span> <span class="n">a3</span><span class="p">,</span> <span class="n">a4</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;After decoration&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;Preparing to call sayHello()&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sayHello</span><span class="p">(</span><span class="s">&quot;say&quot;</span><span class="p">,</span> <span class="s">&quot;hello&quot;</span><span class="p">,</span> <span class="s">&quot;argument&quot;</span><span class="p">,</span> <span class="s">&quot;list&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;after first sayHello() call&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="n">sayHello</span><span class="p">(</span><span class="s">&quot;a&quot;</span><span class="p">,</span> <span class="s">&quot;different&quot;</span><span class="p">,</span> <span class="s">&quot;set of&quot;</span><span class="p">,</span> <span class="s">&quot;arguments&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="s">&quot;after second sayHello() call&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出结果为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Inside</span> <span class="n">wrap</span><span class="p">()</span>
+</span><span class='line'><span class="n">After</span> <span class="n">decoration</span>
+</span><span class='line'><span class="n">Preparing</span> <span class="n">to</span> <span class="n">call</span> <span class="n">sayHello</span><span class="p">()</span>
+</span><span class='line'><span class="n">Inside</span> <span class="n">wrapped_f</span><span class="p">()</span>
+</span><span class='line'><span class="n">Decorator</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">hello</span> <span class="n">world</span> <span class="mi">42</span>
+</span><span class='line'><span class="n">sayHello</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">say</span> <span class="n">hello</span> <span class="n">argument</span> <span class="nb">list</span>
+</span><span class='line'><span class="n">After</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'><span class="n">after</span> <span class="n">first</span> <span class="n">sayHello</span><span class="p">()</span> <span class="n">call</span>
+</span><span class='line'><span class="n">Inside</span> <span class="n">wrapped_f</span><span class="p">()</span>
+</span><span class='line'><span class="n">Decorator</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">hello</span> <span class="n">world</span> <span class="mi">42</span>
+</span><span class='line'><span class="n">sayHello</span> <span class="n">arguments</span><span class="p">:</span> <span class="n">a</span> <span class="n">different</span> <span class="nb">set</span> <span class="n">of</span> <span class="n">arguments</span>
+</span><span class='line'><span class="n">After</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'><span class="n">after</span> <span class="n">second</span> <span class="n">sayHello</span><span class="p">()</span> <span class="n">call</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python Decorators Step by Step (I)]]></title>

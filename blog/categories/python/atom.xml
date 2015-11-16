@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | gemire's space]]></title>
   <link href="http://hengzhang.me/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-15T22:29:21+08:00</updated>
+  <updated>2015-11-16T11:33:01+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -12,6 +12,180 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Python Decorators Step by Step (II)]]></title>
+    <link href="http://hengzhang.me/python/2015/11/10/python-decorators_2/"/>
+    <updated>2015-11-10T00:00:00+08:00</updated>
+    <id>http://hengzhang.me/python/2015/11/10/python-decorators_2</id>
+    <content type="html"><![CDATA[<p>在上一篇文章里面，我们介绍了没有参数的Decorator, 我们采用类的形式讲解，使大家更容易理解Python装饰器的两个工作阶段。</p>
+
+<h2>Decorators without Arguments</h2>
+
+<p>当我们创建一个没有参数的装饰器的时候，被装饰的函数对象作为参数传给类形式装饰器的构造函数，当被装饰的函数被调用的时候，真正调用的是类形式装饰器的<code>__call__</code>方法。</p>
+
+<pre><code class="python">class decoratorWithoutArguments(object):
+
+    def __init__(self, f):
+        """
+        If there are no decorator arguments, the function
+        to be decorated is passed to the constructor.
+        """
+        print("Inside __init__()")
+        self.f = f
+
+    def __call__(self, *args):
+        """
+        The __call__ method is not called until the
+        decorated function is called.
+        """
+        print("Inside __call__()")
+        self.f(*args)
+        print("After self.f(*args)")
+
+@decoratorWithoutArguments
+def sayHello(a1, a2, a3, a4):
+    print('sayHello arguments:', a1, a2, a3, a4)
+
+print("After decoration")
+
+print("Preparing to call sayHello()")
+sayHello("say", "hello", "argument", "list")
+print("After first sayHello() call")
+sayHello("a", "different", "set of", "arguments")
+print("After second sayHello() call")
+</code></pre>
+
+<p>被装饰的函数如果带有参数的话，其都被传递给<code>__call__</code>函数。</p>
+
+<p>输出结果为：
+<code>
+Inside __init__()
+After decoration
+Preparing to call sayHello()
+Inside __call__()
+sayHello arguments: say hello argument list
+After self.f(*args)
+After first sayHello() call
+Inside __call__()
+sayHello arguments: a different set of arguments
+After self.f(*args)
+After second sayHello() call
+</code></p>
+
+<p>需要注意的一点是, <code>__init__</code>函数只在装饰阶段被调用一次，当我们每调用一次调用被装饰过的<code>sayHello()</code>的时候，是<code>__call__</code>函数被真正调用。</p>
+
+<h2>Decorators with arguments</h2>
+
+<p>在以前的例子中，在装饰阶段传给装饰器的只是一个需要被装饰的函数对象。如果这个地方需要传递其他参数，该如何处理？</p>
+
+<pre><code class="python">class decoratorWithArguments(object):
+
+    def __init__(self, arg1, arg2, arg3):
+        """
+        If there are decorator arguments, the function
+        to be decorated is not passed to the constructor!
+        """
+        print("Inside __init__()")
+        self.arg1 = arg1
+        self.arg2 = arg2
+        self.arg3 = arg3
+
+    def __call__(self, f):
+        """
+        If there are decorator arguments, __call__() is only called
+        once, as part of the decoration process! You can only give
+        it a single argument, which is the function object.
+        """
+        print("Inside __call__()")
+        def wrapped_f(*args):
+            print("Inside wrapped_f()")
+            print("Decorator arguments:", self.arg1, self.arg2, self.arg3)
+            f(*args)
+            print("After f(*args)")
+        return wrapped_f
+
+@decoratorWithArguments("hello", "world", 42)
+def sayHello(a1, a2, a3, a4):
+    print('sayHello arguments:', a1, a2, a3, a4)
+
+print("After decoration")
+
+print("Preparing to call sayHello()")
+sayHello("say", "hello", "argument", "list")
+print("after first sayHello() call")
+sayHello("a", "different", "set of", "arguments")
+print("after second sayHello() call")
+</code></pre>
+
+<p>从输出结果中，我们可以看到，带有参数的函数装饰器的行为和以前有很大不同：</p>
+
+<pre><code>Inside __init__()
+Inside __call__()
+After decoration
+Preparing to call sayHello()
+Inside wrapped_f()
+Decorator arguments: hello world 42
+sayHello arguments: say hello argument list
+After f(*args)
+after first sayHello() call
+Inside wrapped_f()
+Decorator arguments: hello world 42
+sayHello arguments: a different set of arguments
+After f(*args)
+after second sayHello() call
+</code></pre>
+
+<p>需要注意到在装饰阶段<code>__init__</code>函数被调用后，<code>__call__</code>立即被调用了。<code>__call__</code>方法只能接收一个参数，也就是需要被装饰的函数对象，并且必须返回一个经过装饰的函数对象，用来替换被装饰的函数对象。需要注意的是<code>__call__</code>方法只是在装饰阶段被调用一次，在调用阶段是<code>__call__</code>方法返回的函数被真正调用。</p>
+
+<p>带有参数的装饰器采用类的形式时，constructor被用来捕获装饰器的参数，<code>__call__</code>方法不再作为经过装饰的函数对象，取而代之的是，你需要在<code>__call__</code>方法里面定义一个函数来作为被装饰的函数，作为后面函数调用时真正被调用的函数。带参数的装饰器和没有参数的装饰器的代码不太一样，你需要仔细领悟其中的精髓，以不变应万变。</p>
+
+<h2>Decorator Functions with Decorator Arguments</h2>
+
+<p>现在需要看一下比上面稍微复杂一点的带有参数的函数装饰器的实现：</p>
+
+<pre><code class="python">def decoratorFunctionWithArguments(arg1, arg2, arg3):
+    def wrap(f):
+        print("Inside wrap()")
+        def wrapped_f(*args):
+            print("Inside wrapped_f()")
+            print("Decorator arguments:", arg1, arg2, arg3)
+            f(*args)
+            print("After f(*args)")
+        return wrapped_f
+    return wrap
+
+@decoratorFunctionWithArguments("hello", "world", 42)
+def sayHello(a1, a2, a3, a4):
+    print('sayHello arguments:', a1, a2, a3, a4)
+
+print("After decoration")
+
+print("Preparing to call sayHello()")
+sayHello("say", "hello", "argument", "list")
+print("after first sayHello() call")
+sayHello("a", "different", "set of", "arguments")
+print("after second sayHello() call")
+</code></pre>
+
+<p>输出结果为：</p>
+
+<pre><code>Inside wrap()
+After decoration
+Preparing to call sayHello()
+Inside wrapped_f()
+Decorator arguments: hello world 42
+sayHello arguments: say hello argument list
+After f(*args)
+after first sayHello() call
+Inside wrapped_f()
+Decorator arguments: hello world 42
+sayHello arguments: a different set of arguments
+After f(*args)
+after second sayHello() call
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python Decorators Step by Step (I)]]></title>
