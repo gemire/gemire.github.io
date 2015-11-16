@@ -4,7 +4,7 @@
   <title><![CDATA[gemire's space]]></title>
   <link href="http://hengzhang.me/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-16T14:35:49+08:00</updated>
+  <updated>2015-11-16T16:39:47+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -19,6 +19,186 @@
     <updated>2015-11-15T09:30:00+08:00</updated>
     <id>http://hengzhang.me/python/2015/11/15/python-decorators_II</id>
     <content type="html"><![CDATA[<p>在上一篇文章里面，我们介绍了没有参数的Decorator, 我们采用类的形式讲解，使大家更容易理解Python装饰器的两个工作阶段。</p>
+
+<h2>Prerequisite</h2>
+
+<p><code>*args</code>是可变的positional arguments列表，　<code>**kwargs</code>是可变的keyword　argument列表。并且， <code>*args</code>必须位于<code>**args</code>之前。</p>
+
+<h3>*args</h3>
+
+<p>类似Java的可变参数，当你不知道你的函数需要接收多少个参数时，你可以使用<code>*args</code>, 它允许给你的函数传递任意多个参数。</p>
+
+<p><code>*args</code>会把传递进来的没有被匹配所有参数作为一个tuple来处理。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">print_everything</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">thing</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&#39;{0}. {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="n">thing</span><span class="p">))</span>
+</span><span class='line'><span class="n">print_everything</span><span class="p">(</span><span class="s">&quot;havard&quot;</span><span class="p">,</span> <span class="s">&quot;mit&quot;</span><span class="p">,</span> <span class="s">&quot;columbia&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出结果为:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="mf">0.</span> <span class="n">havard</span>
+</span><span class='line'><span class="mf">1.</span> <span class="n">mit</span>
+</span><span class='line'><span class="mf">2.</span> <span class="n">columbia</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在可变参数之前，也可以定义0个或者多个常规参数。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">write_multiple_items</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="n">separator</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+</span><span class='line'>    <span class="nb">file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>通常情况下，可变参数应该在常规参数之后，用以接收所有没有被匹配的参数。在<code>*args</code>后面出现的参数只能是<code>keyword</code>参数，意味着它们只能作为keywords　argument使用，而不能作为positional arguments使用。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;/&quot;</span><span class="p">):</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="s">&quot;earth&quot;</span><span class="p">,</span> <span class="s">&quot;mars&quot;</span><span class="p">,</span> <span class="s">&quot;venus&quot;</span><span class="p">))</span>
+</span><span class='line'><span class="k">print</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="s">&quot;earth&quot;</span><span class="p">,</span> <span class="s">&quot;mars&quot;</span><span class="p">,</span> <span class="s">&quot;venus&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&quot;.&quot;</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其输出为:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">earth</span><span class="o">/</span><span class="n">mars</span><span class="o">/</span><span class="n">venus</span>
+</span><span class='line'><span class="n">earth</span><span class="o">.</span><span class="n">mars</span><span class="o">.</span><span class="n">venus</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>*args</code>不仅可以在函数定义时使用，同样也可以在函数调用时使用。不同的是，在函数定义时使用<code>*args</code>是一个将参数pack的过程，而在函数调用时使用<code>*args</code>是将参数unpack的过程。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">print_three_things</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&#39;a = {0}</span><span class="se">\n</span><span class="s">b = {1}</span><span class="se">\n</span><span class="s">c = {2}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">mylist</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;stanford&#39;</span><span class="p">,</span> <span class="s">&#39;oxford&#39;</span><span class="p">,</span> <span class="s">&#39;cambridge&#39;</span><span class="p">]</span>
+</span><span class='line'><span class="n">print_three_things</span><span class="p">(</span><span class="o">*</span><span class="n">mylist</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出结果为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="n">stanford</span>
+</span><span class='line'><span class="n">b</span> <span class="o">=</span> <span class="n">oxford</span>
+</span><span class='line'><span class="n">c</span> <span class="o">=</span> <span class="n">cambridge</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>**kwagrs</h3>
+
+<p>类似的，<code>**kwargs</code>允许你处理没有提前定义的命名参数。</p>
+
+<p><code>**kwargs</code>会把传递进来的没有被匹配keyword arguments作为一个dictionary来处理。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">def</span> <span class="nf">table_things</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span class='line'>        <span class="k">print</span><span class="p">(</span><span class="s">&#39;{0} = {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">table_things</span><span class="p">(</span><span class="n">carrot</span> <span class="o">=</span> <span class="s">&#39;vegetable&#39;</span><span class="p">,</span> <span class="n">apple</span> <span class="o">=</span> <span class="s">&#39;fruit&#39;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出结果为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">carrot</span> <span class="o">=</span> <span class="n">vegetable</span>
+</span><span class='line'><span class="n">apple</span> <span class="o">=</span> <span class="n">fruit</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>和<code>*args</code>类似，在函数调用时也可以使用<code>**kwargs</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">process_person</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">age</span><span class="p">,</span> <span class="n">sex</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">weight</span><span class="p">):</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your name is:{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your age is:{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">age</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your sex is:{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sex</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your height is:{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">height</span><span class="p">))</span>
+</span><span class='line'>    <span class="k">print</span><span class="p">(</span><span class="s">&quot;Your weight is:{0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">weight</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">jack</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;name&#39;</span><span class="p">:</span><span class="s">&#39;jack&#39;</span><span class="p">,</span> <span class="s">&#39;age&#39;</span><span class="p">:</span><span class="mi">25</span><span class="p">,</span> <span class="s">&#39;sex&#39;</span><span class="p">:</span><span class="s">&#39;male&#39;</span><span class="p">,</span> <span class="s">&#39;height&#39;</span><span class="p">:</span><span class="s">&#39;180&#39;</span><span class="p">,</span> <span class="s">&#39;weight&#39;</span><span class="p">:</span><span class="s">&#39;70&#39;</span> <span class="p">}</span>
+</span><span class='line'><span class="n">process_person</span><span class="p">(</span><span class="o">**</span><span class="n">jack</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出结果为：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">Your</span> <span class="n">name</span> <span class="ow">is</span><span class="p">:</span><span class="n">jack</span>
+</span><span class='line'><span class="n">Your</span> <span class="n">age</span> <span class="ow">is</span><span class="p">:</span><span class="mi">25</span>
+</span><span class='line'><span class="n">Your</span> <span class="n">sex</span> <span class="ow">is</span><span class="p">:</span><span class="n">male</span>
+</span><span class='line'><span class="n">Your</span> <span class="n">height</span> <span class="ow">is</span><span class="p">:</span><span class="mi">180</span>
+</span><span class='line'><span class="n">Your</span> <span class="n">weight</span> <span class="ow">is</span><span class="p">:</span><span class="mi">70</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>前面说过，’*args’是可变的positioal argument列表，所以<code>process_person</code>函数还可以这样调用:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">mary</span> <span class="o">=</span> <span class="p">[</span><span class="err">‘</span><span class="n">mary</span><span class="err">’</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="err">‘</span><span class="n">female</span><span class="err">’</span><span class="p">,</span> <span class="err">’</span><span class="mi">170</span><span class="err">’</span><span class="p">,</span> <span class="mi">55</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>事实上，你也可以混合使用命名参数, <code>*args</code>, <code>**kwargs</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="k">def</span> <span class="nf">table_things</span><span class="p">(</span><span class="n">titlestring</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在调用的时候，除了第一参数外，其他传递进来的positional argument参数都传给了<code>*args</code>, keyword　argumnet都传给了<code>kwargs</code>.</p>
+
+<p>在Python3里，你可以在赋值语句的左边使用<code>*l</code><a href="https://www.python.org/dev/peps/pep-3132/">(Extended Iterable Unpacking)</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">first</span><span class="p">,</span> <span class="o">*</span><span class="n">rest</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+</span><span class='line'><span class="n">first</span><span class="p">,</span> <span class="o">*</span><span class="n">middle</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
 
 <h2>Decorators without Arguments</h2>
 

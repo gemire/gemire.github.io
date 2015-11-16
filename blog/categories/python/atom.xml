@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | gemire's space]]></title>
   <link href="http://hengzhang.me/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-16T14:35:49+08:00</updated>
+  <updated>2015-11-16T16:39:47+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -19,6 +19,124 @@
     <updated>2015-11-15T09:30:00+08:00</updated>
     <id>http://hengzhang.me/python/2015/11/15/python-decorators_II</id>
     <content type="html"><![CDATA[<p>在上一篇文章里面，我们介绍了没有参数的Decorator, 我们采用类的形式讲解，使大家更容易理解Python装饰器的两个工作阶段。</p>
+
+<h2>Prerequisite</h2>
+
+<p><code>*args</code>是可变的positional arguments列表，　<code>**kwargs</code>是可变的keyword　argument列表。并且， <code>*args</code>必须位于<code>**args</code>之前。</p>
+
+<h3>*args</h3>
+
+<p>类似Java的可变参数，当你不知道你的函数需要接收多少个参数时，你可以使用<code>*args</code>, 它允许给你的函数传递任意多个参数。</p>
+
+<p><code>*args</code>会把传递进来的没有被匹配所有参数作为一个tuple来处理。</p>
+
+<pre><code class="python">def print_everything(*args):
+    for count, thing in enumerate(args):
+        print('{0}. {1}'.format(count, thing))
+print_everything("havard", "mit", "columbia")
+</code></pre>
+
+<p>输出结果为:</p>
+
+<pre><code class="python">0. havard
+1. mit
+2. columbia
+</code></pre>
+
+<p>在可变参数之前，也可以定义0个或者多个常规参数。</p>
+
+<pre><code class="python">def write_multiple_items(file, separator, *args):
+    file.write(separator.join(args))
+</code></pre>
+
+<p>通常情况下，可变参数应该在常规参数之后，用以接收所有没有被匹配的参数。在<code>*args</code>后面出现的参数只能是<code>keyword</code>参数，意味着它们只能作为keywords　argument使用，而不能作为positional arguments使用。</p>
+
+<pre><code class="python">def concat(*args, sep="/"):
+    return sep.join(args)
+print(concat("earth", "mars", "venus"))
+print(concat("earth", "mars", "venus", sep="."))
+</code></pre>
+
+<p>其输出为:</p>
+
+<pre><code>earth/mars/venus
+earth.mars.venus
+</code></pre>
+
+<p><code>*args</code>不仅可以在函数定义时使用，同样也可以在函数调用时使用。不同的是，在函数定义时使用<code>*args</code>是一个将参数pack的过程，而在函数调用时使用<code>*args</code>是将参数unpack的过程。</p>
+
+<pre><code class="python">def print_three_things(a, b, c):
+    print('a = {0}\nb = {1}\nc = {2}\n'.format(a,b,c))
+
+mylist = ['stanford', 'oxford', 'cambridge']
+print_three_things(*mylist)
+</code></pre>
+
+<p>输出结果为：</p>
+
+<pre><code class="python">a = stanford
+b = oxford
+c = cambridge
+</code></pre>
+
+<h3>**kwagrs</h3>
+
+<p>类似的，<code>**kwargs</code>允许你处理没有提前定义的命名参数。</p>
+
+<p><code>**kwargs</code>会把传递进来的没有被匹配keyword arguments作为一个dictionary来处理。</p>
+
+<pre><code class="Python">def table_things(**kwargs):
+    for name, value in kwargs.items():
+        print('{0} = {1}'.format(name, value))
+
+table_things(carrot = 'vegetable', apple = 'fruit')
+</code></pre>
+
+<p>输出结果为：</p>
+
+<pre><code class="python">carrot = vegetable
+apple = fruit
+</code></pre>
+
+<p>和<code>*args</code>类似，在函数调用时也可以使用<code>**kwargs</code>:</p>
+
+<pre><code class="python">def process_person(name, age, sex, height, weight):
+    print("Your name is:{0}".format(name))
+    print("Your age is:{0}".format(age))
+    print("Your sex is:{0}".format(sex))
+    print("Your height is:{0}".format(height))
+    print("Your weight is:{0}".format(weight))
+
+jack = {'name':'jack', 'age':25, 'sex':'male', 'height':'180', 'weight':'70' }
+process_person(**jack)
+</code></pre>
+
+<p>输出结果为：</p>
+
+<pre><code>Your name is:jack
+Your age is:25
+Your sex is:male
+Your height is:180
+Your weight is:70
+</code></pre>
+
+<p>前面说过，’*args’是可变的positioal argument列表，所以<code>process_person</code>函数还可以这样调用:</p>
+
+<pre><code class="python">mary = [‘mary’, 20, ‘female’, ’170’, 55]
+</code></pre>
+
+<p>事实上，你也可以混合使用命名参数, <code>*args</code>, <code>**kwargs</code>:</p>
+
+<pre><code class="python">def table_things(titlestring, *args, **kwargs)
+</code></pre>
+
+<p>在调用的时候，除了第一参数外，其他传递进来的positional argument参数都传给了<code>*args</code>, keyword　argumnet都传给了<code>kwargs</code>.</p>
+
+<p>在Python3里，你可以在赋值语句的左边使用<code>*l</code><a href="https://www.python.org/dev/peps/pep-3132/">(Extended Iterable Unpacking)</a>:</p>
+
+<pre><code class="python">first, *rest = [1, 2, 3, 4]
+first, *middle, last = range(5)
+</code></pre>
 
 <h2>Decorators without Arguments</h2>
 
