@@ -4,7 +4,7 @@
   <title><![CDATA[gemire's space]]></title>
   <link href="http://hengzhang.me/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2015-11-16T11:33:01+08:00</updated>
+  <updated>2015-11-16T13:40:03+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -318,7 +318,9 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<p>带参数的函数装饰器的返回值必须是用来装饰被装饰函数的函数。也就是说，Python会在装饰阶段使用装饰器返回值，也就是真正的装饰函数，对传进来的需要被装饰的函数对象进行装饰。这也就是为什么这里会有三层函数的原因。最里面的函数是调用阶段真正被执行的函数。</p>
 
+<p>因为closure, <code>wrapped_f</code>函数可得到装饰器的参数<code>arg1</code>, <code>arg2</code>和<code>arg3</code>，而不用像在类的版本里那样明确地把它们存储为属性。</p>
 ]]></content>
   </entry>
   
