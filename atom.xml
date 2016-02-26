@@ -4,7 +4,7 @@
   <title><![CDATA[gemire's space]]></title>
   <link href="http://hengzhang.me/atom.xml" rel="self"/>
   <link href="http://hengzhang.me/"/>
-  <updated>2016-02-20T14:07:45+08:00</updated>
+  <updated>2016-02-26T19:33:19+08:00</updated>
   <id>http://hengzhang.me/</id>
   <author>
     <name><![CDATA[gemire]]></name>
@@ -12,6 +12,551 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[What Are the Lesser Known but Useful Data Structures?]]></title>
+    <link href="http://hengzhang.me/algorithm/2016/02/25/what-are-the-lesser-known-but-useful-data-structures/"/>
+    <updated>2016-02-25T18:30:00+08:00</updated>
+    <id>http://hengzhang.me/algorithm/2016/02/25/what-are-the-lesser-known-but-useful-data-structures</id>
+    <content type="html"><![CDATA[<p>There are some data structures around that are really useful but are unknown to
+ most programmers. Which ones are they?</p>
+
+<p>Everybody knows about linked lists, binary trees, and hashes, but what about
+ <a href="https://en.wikipedia.org/wiki/Skip_list">Skip lists</a> and <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filters</a> for example. I would like to know more data structures
+  that are not so common, but are worth knowing because they rely on great ideas
+  and enrich a programmer’s tool box.<br/>
+PS: I am also interested in techniques like <a href="https://en.wikipedia.org/wiki/Dancing_Links">Dancing links</a> which
+make clever use of properties of a common data structure.</p>
+
+<!--more-->
+
+
+<h4>Ackermann Function</h4>
+
+<p>The really cool thing is that both operations have amortized running time proportional to the inverse of the
+<a href="https://en.wikipedia.org/wiki/Ackermann_function">Ackermann Function</a>, making this the “fastest” non-constant time data structure.</p>
+
+<h4>Zobrist Hashing</h4>
+
+<p><a href="https://en.wikipedia.org/wiki/Zobrist_hashing">Zobrist Hashing</a> is a hash function generally used for representing a game board position (like in Chess) but surely has other uses. One nice things about it is that is can be incrementally updated as the board is updated.</p>
+
+<h3>Fenwick trees(Binary Indexed Trees)</h3>
+
+<p><a href="https://en.wikipedia.org/wiki/Fenwick_tree">Fenwick trees</a> (or binary indexed trees) are a worthy addition to ones toolkit. If you have an array of counters and you need to constantly update them while querying for cumulative counts (as in PPM compression), Fenwick trees will do all operations in O(log n) time and require no extra space. See also this <a href="https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/">topcoder tutorial</a> for a good introduction.</p>
+
+<p>It’s a data structure to keep count of the sum of all elements in a vector, between two given subindexes i and j. The trivial solution, precalculating the sum since the begining doesn’t allow to update a item (you have to do O(n) work to keep up).</p>
+
+<p> Fenwick Trees allow you to update and query in O(log n), and how it works is really cool and simple. It’s really well explained in Fenwick’s original paper, freely available here:</p>
+
+<p> <a href="http://www.cs.ubc.ca/local/reading/proceedings/spe91-95/spe/vol24/issue3/spe884.pdf">http://www.cs.ubc.ca/local/reading/proceedings/spe91-95/spe/vol24/issue3/spe884.pdf</a>
+ Its father, the RQM tree is also very cool: It allows you to keep info about the minimum element between two indexes of the vector, and it also works in O(log n) update and query. I like to teach first the RQM and then the Fenwick Tree.</p>
+
+<h3>Bloom Filter</h3>
+
+<p>Per the Bloom Filter mentions, Deletable Bloom Filters (DlBF) are in some ways better than basic counting variants. See <a href="http://arxiv.org/abs/1005.0352">http://arxiv.org/abs/1005.0352</a></p>
+
+<h3>Corner stitching</h3>
+
+<p>A <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/1983/6352.html">corner-stitched data structure</a>. From the summary:
+Corner stitching is a technique for representing
+rectangular two-dimensional objects. It appears to
+be especially well-suited for interactive editing
+systems for VLSI layouts. The data structure
+has two important features: first, empty space is
+represented explicitly; and second, rectangular
+areas are stitched together at their corners like a
+patchwork quilt. This organization results in fast
+algorithms (linear time or better) for searching,
+creation, deletion, stretching, and compaction. The
+algorithms are presented under a simplified model of VLSI circuits, and the storage requirements of
+the structure are discussed. Measurements indicate
+that corner stitching requires approximately three
+times as much memory space as the simplest possible
+representation.</p>
+
+<h3>Burrows–Wheeler transform</h3>
+
+<p>Burrows–Wheeler transform (block-sorting compression)
+Its essential algorithm for compression. Let say that you want to
+compress lines on text files. You would say that if you sort the
+lines, you lost information. But BWT works like this – it reduces
+entropy a lot by sorting input, keeping integer indexes to recover
+the original order.</p>
+
+<h3>PATRICIA – Practical Algorithm to Retrieve Information Coded in Alphanumeric, D.R.Morrison (1968).</h3>
+
+<p>A <a href="http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Tree/PATRICIA/">PATRICIA tree</a> is related to a Trie. The
+problem with Tries is that when the set of keys is sparse, i.e. when the actual keys form a small subset of the
+set of potential keys, as is very often the case, many (most) of the internal nodes in the Trie have only one
+descendant. This causes the Trie to have a high space-complexity.</p>
+
+<h3>Interval Trees</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Interval_tree">Interval Trees</a>. They allow you to take a bunch of intervals (ie
+start/end times, or whatever) and query for which intervals contain a given time, or which intervals were
+“active” during a given period. Querying can be done in O(log n) and pre-processing is O(n log n).</p>
+
+<h3>DAWGs</h3>
+
+<p><a href="https://en.wikipedia.org/wiki/Directed_acyclic_word_graph">DAWGs</a> are a special kind of Trie where similar child trees are compressed into single parents. I extended modified DAWGs and came up with a nifty data structure called ASSDAWG (Anagram Search Sorted DAWG). The way this works is whenever a string is inserted into the DAWG, it is bucket-sorted first and then inserted and the leaf nodes hold an additional number indicating which permutations are valid if we reach that leaf node from root. This has 2 nifty advantages:
+ 1. Since I sort the strings before insertion and since DAWGs naturally collapse similar sub trees, I get high level of compression (e.g. “eat”, “ate”, “tea” all become 1 path a-e-t with a list of numbers at the leaf node indicating which permutations of a-e-t are valid).
+ 2. Searching for anagrams of a given string is super fast and trivial now as a path from root to leaf holds all the valid anagrams of that path at the leaf node using permutation-numbers.</p>
+
+<h3>XOR Linked List</h3>
+
+<p>XOR Linked List uses two XOR’d pointers to lessen the storage requirements for doubly-linked list. Kind of obscure but neat!</p>
+
+<h3>Tokenmap</h3>
+
+<p>I am not sure if this data structure has a name, but the proposed <a href="http://svn.boost.org/svn/boost/sandbox/tokenmap/libs/tokenmap/doc/html/index.html">tokenmap</a> data structure for
+inclusion into Boost is kind of interesting. It is a dynamically resizable map where look-ups are not only O(1),
+they are simple array accesses. I wrote most of the <a href="http://svn.boost.org/svn/boost/sandbox/tokenmap/libs/tokenmap/doc/html/tokenmap/background.html">background  material</a> on
+this data structure which describes the fundamental principle behind how it works.</p>
+
+<p>Something like a tokenmap is used by operating systems to map file or resource handles to data structures
+representing the file or resource.</p>
+
+<h3>Cache Oblivious</h3>
+
+<p>The basic idea of <a href="http://blogs.msdn.com/b/devdev/archive/2007/06/12/cache-oblivious-data-structures.aspx">Cache
+Oblivious</a> data structure
+is to lay out a tree in recursively smaller blocks so that caches of many different sizes will take advantage of
+blocks that convenient fit in them. This leads to efficient use of caching at everything from L1 cache in RAM to
+big chunks of data read off of the disk without needing to know the specifics of the sizes of any of those
+caching layers.</p>
+
+<h3>FM-index</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/FM-index">FM-index</a> by Paolo Ferragina and Giovanni Manzini is really cool.
+Especially in bioinformatics. It’s essentially a compressed full text index that utilizes a combination of a
+suffix array and a burrows-wheeler transform of the reference text. The index can be searched without
+decompressing the whole index.</p>
+
+<h3>Right-angle triangle networks (RTINs)</h3>
+
+<p><a href="http://geoinformatics.fsv.cvut.cz/gwiki/Modern_Algorithms_for_Real-Time_Terra%0Ain_Visualization_on_Commodity_Hardware%23RTIN">Right-angle triangle
+networks</a> is a beautifully simple way to adaptively subdivide a mesh. Split
+and merge operations are just a few lines of code each.</p>
+
+<h3>Ternary Search Tree</h3>
+
+<p>The characters of <a href="http://en.wikipedia.org/wiki/Ternary_search_tree">Ternary Search Tree</a> are:
+ - Quick prefix search (for incremental autocomplete,etc)
+ - Partial Matching (When you want to find all words within X hamming distance of a string)
+ - Wildcard Searches
+ - Quite Easy to implement.</p>
+
+<h3>Cycle Sort</h3>
+
+<p><a href="http://corte.si/posts/code/cyclesort/index.html">Cycle Sort</a> is a pretty neat sorting algorithm.
+It’s a sorting algorithm used to minimize the total number of writes. This is particularly useful when you’re
+dealing with flash memory where the life-span of the flash memory is proportional to the amount of writes. Here
+is the <a href="http://en.wikipedia.org/wiki/Cycle_sort">Wikipedia article</a>, but I recommend going to the first link. (nice visuals!)</p>
+
+<h3>Cartesian Tree</h3>
+
+<p>I stumbled on <a href="http://en.wikipedia.org/wiki/Cartesian_tree">Cartesian Tree</a> when I read about some algorithms
+related to RMQ and LCA. In a cartesian tree, the lowest common ancestor between two nodes is the minimum node
+between them. It is useful to convert a RMQ problem to LCA.</p>
+
+<h3>Work Stealing Queue</h3>
+
+<p>Work Stealing Queue is a lock-free data structure for dividing the work equaly among multiple threads
+please reference: <a href="http://stackoverflow.com/questions/2101789/implementation-of-a-work-stealing-queue-in-c-c">http://stackoverflow.com/questions/2101789/implementation-of-a-work-stealing-queue-in-c-c</a></p>
+
+<h3>B* tree</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/B%2A">B* tree</a> is a variety of B-tree that is efficient for searching at the cost
+of a more expensive insertion.</p>
+
+<h3>A data-structure useful for Simulation stuff</h3>
+
+<p>There is a clever Data-structure out there that uses Arrays to save the Data of the Elements, but the Arrays are
+linked together in an Linked-List/Array.</p>
+
+<p>This does have the advantage that the iteration over the elements is very fast (faster than a pure linked-list
+approach) and the costs for moving the Arrays with the Elements around in Memory and/or (de-)allocation are at a
+minimum. (Because of this this data-structure is useful for Simulation stuff).</p>
+
+<p> I know about it from here:</p>
+
+<p> <a href="http://software.intel.com/en-us/blogs/2010/03/26/linked-list-verses-array/">http://software.intel.com/en-us/blogs/2010/03/26/linked-list-verses-array/</a>
+ “…and that an additional array is allocated and linked in to the cell list of arrays of particles. This is similar in some respects to how TBB implemented its concurrent container.”(it is about ther Performance of Linked Lists vs. Arrays)</p>
+
+<h3>Persistent Data Structures</h3>
+
+<p>materials: <a href="http://en.wikipedia.org/wiki/Persistent_data_structure">http://en.wikipedia.org/wiki/Persistent_data_structure</a></p>
+
+<h3>Vantage-Point-Trees and Burkhard-Keller-Trees</h3>
+
+<p>The following link include code to perform similarity searches in a metric space.<br/>
+<a href="http://well-adjusted.de/mspace.py/index.html">http://well-adjusted.de/mspace.py/index.html</a><br/>
+There are faster implementations around (see ActiveState’s Python recipes or implementations in other languages),
+but I think/hope my code helps to understand these data structures.</p>
+
+<p>By the way, both BK and VP trees can be used for much more than searching for similar strings. You can do
+similarity searches for arbitrary objects as long as you have a distance function that satisfies a few conditions
+(positivity, symmetry, triangle inequality).</p>
+
+<h3>Splash Tables</h3>
+
+<p><a href="http://crpit.com/confpapers/CRPITV91Askitis.pdf">Splash Tables</a> are great. They’re like a normal hash table,
+except they guarantee constant-time lookup and can handle 90% utilization without losing performance. They’re a
+generalization of the <a href="http://en.wikipedia.org/wiki/Cuckoo_hashing">Cuckoo Hash</a> (also a great data structure).
+They do appear to be <a href="http://www.faqs.org/patents/app/20080235488">patented</a>, but as with most pure software
+patents I wouldn’t worry too much.</p>
+
+<h3>Bucket Brigade</h3>
+
+<p>They are used extensively in Apache. Basically they are a linked list that loops around on itself in a ring. I am
+not sure if they are used outside of Apache and Apache modules but they fit the bill as a cool yet lesser known
+data structure. A bucket is a container for some arbitrary data and a bucket brigade is a collection of buckets.
+The idea is that you want to be able to modify and insert data at any point in the structure.</p>
+
+<p>Lets say that you have a bucket brigade that contains an html document with one character per bucket. You want to convert all the &lt; and > symbols into &lt; and &gt; entities. The bucket brigade allows you to insert some extra buckets in the brigade when you come across a &lt; or > symbol in order to fit the extra characters required for the entity. Because the bucket brigade is in a ring you can insert backwards or forwards. This is much easier to do (in C) than using a simple buffer.</p>
+
+<p> Some reference on bucket brigades below:</p>
+
+<p><a href="http://apr.apache.org/docs/apr/trunk/group___a_p_r___util___bucket___brigades.html">Apache Bucket Brigade Reference</a>
+<a href="http://www.apachetutor.org/dev/brigades">Introduction to Buckets and Brigades</a></p>
+
+<h3>WPL Trees</h3>
+
+<p>I had good luck with <a href="http://comjnl.oxfordjournals.org/cgi/content/short/34/5/444">WPL Trees</a> before. A tree
+variant that minimizes the weighted path length of the branches. Weight is determined by node access, so that
+frequently-accessed nodes migrate closer to the root. Not sure how they compare to splay trees, as I’ve never
+used those.</p>
+
+<h3>Ball Trees.</h3>
+
+<p>It names Ball Trees just because they make people giggle.<br/>
+A ball tree is a data structure that indexes points in a metric space. Here’s an
+<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.91.8209&amp;rep=rep1&amp;type=pdf">article</a> on building them.
+They are often used for finding nearest neighbors to a point or accelerating k-means.</p>
+
+<h3>Catenable Deque</h3>
+
+<p>They work as a catenable deque with O(1) access to either end, O(log min(n,m)) append, and provide O(log min(n,length - n)) indexing with direct access to a monoidal prefix sum over any portion of the sequence.</p>
+
+<p> I also have some <a href="http://comonad.com/reader/wp-content/uploads/2010/04/Finger-Trees.pdf">slides</a> describing their derivation and use.</p>
+
+<h3>Bootstrapped skew-binomial heaps</h3>
+
+<p> Bootstrapped skew-binomial heaps(<a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.48.973">http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.48.973</a>) is created by Gerth Stølting Brodal and Chris Okasaki:</p>
+
+<p>Despite their long name, they provide asymptotically optimal heap operations, even in a function setting.</p>
+
+<ul>
+<li>O(1) size, union, insert, minimum</li>
+<li>O(log n) deleteMin</li>
+</ul>
+
+
+<p> Note that union takes O(1) rather than O(log n) time unlike the more well-known heaps that are commonly covered in data structure textbooks, such as [leftist heaps][<a href="http://hackage.haskell.org/packages/archive/heap/0.5.0/doc/html/Data-Heap.html">http://hackage.haskell.org/packages/archive/heap/0.5.0/doc/html/Data-Heap.html</a>). And unlike <a href="http://en.wikipedia.org/wiki/Fibonacci_heap">Fibonacci heaps</a>, those asymptotics are worst-case, rather than amortized, even if used persistently!<br/>
+They were jointly derived by Brodal and Okasaki, after Brodal came up with an <a href="http://www.brics.dk/~gerth/pub/wads95.html">imperative heap</a> with the same asymptotics.</p>
+
+<h3>Inversion List</h3>
+
+<p>Another nice use case is for weighted random decisions. Suppose you have a list of symbols and associated probabilites, and you want to pick them at random according to these probabilities</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a =&gt; 0.1 b =&gt; 0.5 c =&gt; 0.4</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then you do a running sum of all the probabilities:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(0.1, 0.6, 1.0)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is your inversion list. You generate a random number between 0 and 1, and find the index of the next higher entry in the list. You can do that with a binary search, because it’s sorted. Once you’ve got the index, you can look up the symbol in the original list.</p>
+
+<p> If you have n symbols, you have O(n) preparation time, and then O(log(n)) acess time for each randomly chosen symbol – independently of the distribution of weights.</p>
+
+<p> A variation of inversion lists uses negative numbers to indicate the endpoint of ranges, which makes it easy to count how many ranges overlap at a certain point. See <a href="http://www.brics.dk/~gerth/pub/wads95.html">http://www.perlmonks.org/index.pl?node_id=841368</a> for an example.</p>
+
+<h3>lock-free alternatives</h3>
+
+<p>I think lock-free alternatives to standard data structures i.e lock-free queue, stack and list are much overlooked. They are increasingly relevant as concurrency becomes a higher priority and are much more admirable goal than using Mutexes or locks to handle concurrent read/writes.</p>
+
+<p><a href="http://cellperformance.beyond3d.com/articles/index.html">Mike Acton</a>’s (often provocative) blog has some excellent articles on lock-free design and approaches</p>
+
+<h3>Min-Max Heap</h3>
+
+<p>You can use a min-heap to find the minimum element in constant time, or a max-heap to find the the maximum element. But what if you wanted to do both operations? You can use a <a href="http://www.cs.otago.ac.nz/staffpriv/mike/Papers/MinMaxHeaps/MinMaxHeaps.pdf">Min-Max</a> to do both operations in constant time. It works by using min max ordering: alternating between min and max heap comparison between consecutive tree levels.</p>
+
+<ul>
+<li><p>Zippers – derivatives of data structures that modify the structure to have a natural notion of ‘cursor’ current location. These are really useful as they guarantee indicies cannot be out of bound used, e.g. in the xmonad window manager to track which window has focused.
+Amazingly, you can derive them by applying techniques from calculus to the type of the original data structure!</p></li>
+<li><p>Nested sets are nice for representing trees in the relational databases and running queries on them. For instance, ActiveRecord (Ruby on Rails’ default ORM) comes with a very simple nested set plugin, which makes working with trees trivial.</p></li>
+<li><p>PQ-Trees</p></li>
+<li><p>I personally find sparse matrix data structures to be very interesting. <a href="http://www.netlib.org/linalg/html_templates/node90.html">http://www.netlib.org/linalg/html_templates/node90.html</a>
+The famous BLAS libraries use these. And when you deal with linear systems that contain 100,000’s of rows and columns, it becomes critical to use these. Some of these also resemble the compact grid (basically like a bucket-sorted grid) which is common in computer graphics. <a href="http://www.cs.kuleuven.be/~ares/publications/LD08CFRGRT/LD08CFRGRT.pdf">http://www.cs.kuleuven.be/~ares/publications/LD08CFRGRT/LD08CFRGRT.pdf</a>
+Also as far as computer graphics is concerned, MAC grids are somewhat interesting, but only because they’re clever. <a href="http://www.seas.upenn.edu/~cis665/projects/Liquation_665_Report.pdf">http://www.seas.upenn.edu/~cis665/projects/Liquation_665_Report.pdf</a></p></li>
+<li><p>It’s pretty domain-specific, but half-edge data structure is pretty neat. It provides a way to iterate over polygon meshes (faces and edges) which is very useful in computer graphics and computational geometry.</p></li>
+<li>Left Leaning Red-Black Trees. A significantly simplified implementation of red-black trees by Robert Sedgewick published in 2008 (~half the lines of code to implement). If you’ve ever had trouble wrapping your head around the implementation of a Red-Black tree, read about this variant.</li>
+</ul>
+
+
+<p>Very similar (if not identical) to Andersson Trees.</p>
+
+<ul>
+<li><p>Not really a data structure; more of a way to optimize dynamically allocated arrays, but the gap buffers used in Emacs are kind of cool.</p></li>
+<li><p>Scapegoat trees. A classic problem with plain binary trees is that they become unbalanced (e.g. when keys are inserted in ascending order.)</p></li>
+</ul>
+
+
+<p> Balanced binary trees (AKA AVL trees) waste a lot of time balancing after each insertion.</p>
+
+<p> Red-Black trees stay balanced, but require a extra bit of storage for each node.</p>
+
+<p> Scapegoat trees stay balanced like red-black trees, but don’t require ANY additional storage. They do this by analyzing the tree after each insertion, and making minor adjustments. See <a href="http://en.wikipedia.org/wiki/Scapegoat_tree.">http://en.wikipedia.org/wiki/Scapegoat_tree.</a>
+- BK-Trees, or Burkhard-Keller Trees are a tree-based data structure which can be used to quickly find near-matches to a string.</p>
+
+<ul>
+<li>Environment tracking recursive structures.</li>
+</ul>
+
+
+<p> Compilers use a structure that is recursive but not like a tree. Inner scopes have a pointer to an enclosing scope so the nesting is inside-out. Verifying whether a variable is in scope is a recursive call from the inside scope to the enclosing scope.</p>
+
+<pre><code class="`java">public class Env {
+    HashMap&lt;String, Object&gt; map;
+    Env outer;
+
+    Env() {
+        outer = null;
+        map = new HashMap();
+    }
+
+    Env(Env o) {
+        outer = o;
+        map = new HashMap();
+    }
+
+    void put(String key, Object value) {
+        map.put(key, value);
+    }
+
+    Object get(String key) {
+        if (map.containsKey(key)) {
+            return map.get(key);
+        }
+        if (outer != null) {
+            return outer.get(key);
+        }
+        return null;
+    }
+
+    Env push() {
+        return new Env(this);
+    }
+
+    Env pop() {
+        return outer;
+    }
+}
+</code></pre>
+
+<p> I’m not sure if this structure even has a name. I call it an inside-out list.</p>
+
+<ul>
+<li>The Region Quadtree</li>
+</ul>
+
+
+<p> (quoted from Wikipedia)</p>
+
+<blockquote><p>The region quadtree represents a partition of space in two dimensions by decomposing the region into four equal quadrants, subquadrants, and so on with each leaf node containing data corresponding to a specific subregion. Each node in the tree either has exactly four children, or has no children (a leaf node).</p></blockquote>
+
+<p> Quadtrees like this are good for storing spatial data, e.g. latitude and longitude or other types of coordinates.</p>
+
+<p> This was by far my favorite data structure in college. Coding this guy and seeing it work was pretty cool. I highly recommend it if you’re looking for a project that will take some thought and is a little off the beaten path. Anyway, it’s a lot more fun than the standard BST derivatives that you’re usually assigned in your data structures class!</p>
+
+<p> In fact, as a bonus, I’ve found the notes from the lecture leading up to the class project (from Virginia Tech) here (pdf warning).</p>
+
+<ul>
+<li><p>Arne Andersson trees are a simpler alternative to red-black trees, in which only right links can be red. This greatly simplifies maintenance, while keeping performance on par with red-black trees. The original paper gives a nice and short implementation for insertion and deletion.</p></li>
+<li><p>An unrolled linked list is a variation on the linked list which stores multiple elements in each node. It can drastically increase cache performance, while decreasing the memory overhead associated with storing list metadata such as references. It is related to the B-tree.
+<code>java
+Class Node{
+      Node next; // reference to next node in list
+      int numElements // number of elements in this node, up to maxElements
+      List&lt;Node&gt; elements // an array of numElements elements, with space allocated for maxElements elements
+}
+</code></p></li>
+<li><p>A min-max heap is a variation of a heap that implements a double-ended priority queue. It achieves this by by a simple change to the heap property: A tree is said to be min-max ordered if every element on even (odd) levels are less (greater) than all childrens and grand children. The levels are numbered starting from 1.</p></li>
+<li><p>An interesting variant of the hash table is called Cuckoo Hashing. It uses multiple hash functions instead of just 1 in order to deal with hash collisions. Collisions are resolved by removing the old object from the location specified by the primary hash, and moving it to a location specified by an alternate hash function. Cuckoo Hashing allows for more efficient use of memory space because you can increase your load factor up to 91% with only 3 hash functions and still have good access time.</p></li>
+<li><p>Skip lists are actually pretty awesome: <a href="http://en.wikipedia.org/wiki/Skip_list">http://en.wikipedia.org/wiki/Skip_list</a></p></li>
+<li><p>Take a look at the sideways heap, presented by Donald Knuth.</p></li>
+</ul>
+
+
+<p> <a href="http://stanford-online.stanford.edu/seminars/knuth/071203-knuth-300.asx">http://stanford-online.stanford.edu/seminars/knuth/071203-knuth-300.asx</a></p>
+
+<ul>
+<li>Getting away from all these graph structures, I just love the simple Ring-Buffer.</li>
+</ul>
+
+
+<p> When properly implemented you can seriously reduce your memory footprint while maintaining performance and sometimes even improving it.</p>
+
+<ul>
+<li><p>Fast Compact tries:</p></li>
+<li><p>Judy arrays: Very fast and memory efficient ordered sparse dynamic arrays for bits, integers and strings. Judy arrays are faster and more memory efficient than any binary-search-tree.</p></li>
+<li>HAT-trie: A Cache-conscious Trie-based Data Structure for Strings</li>
+<li><p>B-tries for Disk-based String Management</p></li>
+<li><p>Binomial heap‘s have a lot of interesting properties, most useful of which is merging.</p></li>
+<li><p>Fibonacci heaps
+They’re used in some of the fastest known algorithms (asymptotically) for a lot of graph-related problems, such as the Shortest Path problem. Dijkstra’s algorithm runs in O(E log V) time with standard binary heaps; using Fibonacci heaps improves that to O(E + V log V), which is a huge speedup for dense graphs. Unfortunately, though, they have a high constant factor, often making them impractical in practice.</p></li>
+<li><p>How about splay trees?
+Also, Chris Okasaki’s purely functional data structures come to mind.</p></li>
+</ul>
+
+
+<p> The reason they are cool is threefold:
+ - They are small: you only need the left and right pointers like you do in any binary tree (no node-color or size information needs to be stored)
+ - They are (comparatively) very easy to implement
+ - They offer optimal amortized complexity for a whole host of “measurement criteria” (log n lookup time being the one everybody knows). See <a href="http://en.wikipedia.org/wiki/Splay_tree#Performance_theorems">http://en.wikipedia.org/wiki/Splay_tree#Performance_theorems</a></p>
+
+<ul>
+<li><p>Suffix tries. Useful for almost all kinds of string searching (<a href="http://en.wikipedia.org/wiki/Suffix_trie#Functionality">http://en.wikipedia.org/wiki/Suffix_trie#Functionality</a>). See also suffix arrays; they’re not quite as fast as suffix trees, but a whole lot smaller.</p></li>
+<li><p>Heap-ordered search trees: you store a bunch of (key, prio) pairs in a tree, such that it’s a search tree with respect to the keys, and heap-ordered with respect to the priorities. One can show that such a tree has a unique shape (and it’s not always fully packed up-and-to-the-left). With random priorities, it gives you expected O(log n) search time, IIRC.</p></li>
+<li><p>A niche one is adjacency lists for undirected planar graphs with O(1) neighbour queries. This is not so much a data structure as a particular way to organize an existing data structure. Here’s how you do it: every planar graph has a node with degree at most 6. Pick such a node, put its neighbors in its neighbor list, remove it from the graph, and recurse until the graph is empty. When given a pair (u, v), look for u in v’s neighbor list and for v in u’s neighbor list. Both have size at most 6, so this is O(1).</p></li>
+</ul>
+
+
+<p> By the above algorithm, if u and v are neighbors, you won’t have both u in v’s list and v in u’s list. If you need this, just add each node’s missing neighbors to that node’s neighbor list, but store how much of the neighbor list you need to look through for fast lookup.</p>
+
+<ul>
+<li>Spatial Indices, in particular R-trees and KD-trees, store spatial data efficiently. They are good for geographical map coordinate data and VLSI place and route algorithms, and sometimes for nearest-neighbor search.</li>
+<li><p>Bit Arrays store individual bits compactly and allow fast bit operations.</p></li>
+<li><p><zvrba> Van Emde-Boas trees</p>
+
+<p>They give you O(log log n) dictionaries with {1..n} keys, independent of how many of the keys are in use. Just like repeated halving gives you O(log n), repeated sqrting gives you O(log log n), which is what happens in the vEB tree.</p></li>
+<li><p>Kd-Trees, spatial data structure used (amongst others) in Real-Time Raytracing, has the downside that triangles that cross intersect the different spaces need to be clipped. Generally BVH’s are faster because they are more lightweight.</p></li>
+<li>MX-CIF Quadtrees, store bounding boxes instead of arbitrary point sets by combining a regular quadtree with a binary tree on the edges of the quads.</li>
+<li><p>HAMT, hierarchical hash map with access times that generally exceed O(1) hash-maps due to the constants involved.</p></li>
+<li><p>Inverted Index, quite well known in the search-engine circles, because it’s used for fast retrieval of documents associated with different search-terms.
+Most, if not all, of these are documented on the NIST Dictionary of Algorithms and Data Structures</p></li>
+<li><p>Pairing heaps are a type of heap data structure with relatively simple implementation and excellent practical amortized performance.</p></li>
+<li><p>To add an item you run it through k hash functions that will give you k indices in the array which you then set to 1.</p></li>
+</ul>
+
+
+<p> To check if an item is in the set, compute the k indices and check if they are all set to 1.</p>
+
+<p> Of course, this gives some probability of false-positives (according to wikipedia it’s about 0.61<sup>m/n</sup> where n is the number of inserted items). False-negatives are not possible.</p>
+
+<p> Removing an item is impossible, but you can implement counting bloom filter, represented by array of ints and increment/decrement.</p>
+
+<ul>
+<li><p>Splay Trees are cool. They reorder themselves in a way that moves the most often queried elements closer to the root.</p></li>
+<li><p>I like treaps – for the simple, yet effective idea of superimposing a heap structure with random priority over a binary search tree in order to balance it.</p></li>
+<li><p>Circular or ring buffer – used for streaming, among other things.</p></li>
+<li><p>Counted unsorted balanced btrees.</p></li>
+</ul>
+
+
+<p> Perfect for text editor buffers.</p>
+
+<p> <a href="http://www.chiark.greenend.org.uk/~sgtatham/algorithms/cbtree.html">http://www.chiark.greenend.org.uk/~sgtatham/algorithms/cbtree.html</a></p>
+
+<ul>
+<li><p>I’m surprised no one has mentioned Merkle trees (ie. Hash Trees).
+Used in many cases (P2P programs, digital signatures) where you want to verify the hash of a whole file when you only have part of the file available to you.</p></li>
+<li><p>One lesser known, but pretty nifty data structure is the Fenwick Tree (also sometimes called a Binary Indexed Tree or BIT). It stores cumulative sums and supports O(log(n)) operations. Although cumulative sums might not sound very exciting, it can be adapted to solve many problems requiring a sorted/log(n) data structure.</p></li>
+</ul>
+
+
+<p> IMO, its main selling point is the ease with which can be implemented. Very useful in solving algorithmic problems that would involve coding a red-black/avl tree otherwise.</p>
+
+<ul>
+<li>Have a look at Finger Trees, especially if you’re a fan of the previously mentioned purely functional data structures. They’re a functional representation of persistent sequences supporting access to the ends in amortized constant time, and concatenation and splitting in time logarithmic in the size of the smaller piece.
+As per the original article:
+
+<blockquote><p>Our functional 2-3 finger trees are an instance of a general design technique in- troduced by Okasaki (1998), called implicit recursive slowdown. We have already noted that these trees are an extension of his implicit deque structure, replacing pairs with 2-3 nodes to provide the flexibility required for efficient concatenation and splitting.</p></blockquote></li>
+</ul>
+
+
+<p> A Finger Tree can be parameterized with a monoid, and using different monoids will result in different behaviors for the tree. This lets Finger Trees simulate other data structures.</p>
+
+<ul>
+<li>Binary decision diagram (my very favorite data structure, good for representing boolean equations, and solving them. Effective for a great lot of things)</li>
+<li>Heaps (a tree where the parent of a node always maintains some relation to the children of the node, for instance, the parent of a node is always greater than each of it’s children (max-heap) )</li>
+<li>Priority Queues (really just min-heaps and max-heaps, good for maintaining order of a lot of elements there the e.g. the item with the highest value is supposed to be removed first)
+Hash tables, (with all kinds of lookup strategies, and bucket overflow handling)</li>
+<li>Balanced binary search trees (Each of these have their own advantages)</li>
+<li>RB-trees (overall good, when inserting, lookup, removing and iterating in an ordered fashion)</li>
+<li>Avl-trees (faster for lookup than RB, but otherwise very similar to RB)</li>
+<li>Splay-trees (faster for lookup when recently used nodes are likely to be reused)</li>
+<li>Fusion-tree (Exploiting fast multiplication for getting even better lookup times)</li>
+<li>B+ Trees (Used for indexing in databases and file systems, very efficient when latency to read/write from/to the index is significant).</li>
+<li>Spatial indexes ( Excellent for querying for whether points/circles/rectangles/lines/cubes is in close proximity to or contained within each other)</li>
+<li>BSP tree</li>
+<li>Quadtree</li>
+<li>Octree</li>
+<li>Range-tree</li>
+<li>Lots of similar but slightly different trees, and different dimensions</li>
+<li>Interval trees (good finding overlapping intervals, linear)</li>
+<li>Graphs</li>
+<li>adjacency list (basically a list of edges)</li>
+<li>adjacency matrix (a table representing directed edges of a graph with a single bit per edge. Very fast for graph traversal)</li>
+</ul>
+
+
+<p> These are the ones i can come to think of. There are even more on wikipedia about data structures</p>
+
+<ul>
+<li>Skip lists are pretty neat.
+
+<blockquote><p>Wikipedia
+A skip list is a probabilistic data structure, based on multiple parallel, sorted linked lists, with efficiency comparable to a binary search tree (order log n average time for most operations).</p></blockquote></li>
+</ul>
+
+
+<p> They can be used as an alternative to balanced trees (using probalistic balancing rather than strict enforcement of balancing). They are easy to implement and faster than say, a red-black tree. I think they should be in every good programmers toolchest.</p>
+
+<p> If you want to get an in-depth introduction to skip-lists here is a link to a video of MIT’s Introduction to Algorithms lecture on them.<br/>
+ Also, here is a Java applet demonstrating Skip Lists visually.</p>
+
+<ul>
+<li><p>Rope: It’s a string that allows for cheap prepends, substrings, middle insertions and appends. I’ve really only had use for it once, but no other structure would have sufficed. Regular strings and arrays prepends were just far too expensive for what we needed to do, and reversing everthing was out of the question.</p></li>
+<li><p>I think Disjoint Set is pretty nifty for cases when you need to divide a bunch of items into distinct sets and query membership. Good implementation of the Union and Find operations result in amortized costs that are effectively constant (inverse of Ackermnan’s Function, if I recall my data structures class correctly).</p></li>
+<li><p>Anyone with experience in 3D rendering should be familiar with BSP trees. Generally, it’s the method by structuring a 3D scene to be manageable for rendering knowing the camera coordinates and bearing.</p>
+
+<blockquote><p>Binary space partitioning (BSP) is a method for recursively subdividing a space into convex sets by hyperplanes. This subdivision gives rise to a representation of the scene by means of a tree data structure known as a BSP tree.</p></blockquote></li>
+</ul>
+
+
+<blockquote><p>In other words, it is a method of breaking up intricately shaped polygons into convex sets, or smaller polygons consisting entirely of non-reflex angles (angles smaller than 180°). For a more general description of space partitioning, see space partitioning.</p>
+
+<p>Originally, this approach was proposed in 3D computer graphics to increase the rendering efficiency. Some other applications include performing geometrical operations with shapes (constructive solid geometry) in CAD, collision detection in robotics and 3D computer games, and other computer applications that involve handling of complex spatial scenes.</p></blockquote>
+
+<ul>
+<li>Enhanced hashing algorithms are quite interesting. Linear hashing is neat, because it allows splitting one “bucket” in your hash table at a time, rather than rehashing the entire table. This is especially useful for distributed caches. However, with most simple splitting policies, you end up splitting all buckets in quick succession, and the load factor of the table oscillates pretty badly.</li>
+</ul>
+
+
+<p> I think that spiral hashing is really neat too. Like linear hashing, one bucket at a time is split, and a little less than half of the records in the bucket are put into the same new bucket. It’s very clean and fast. However, it can be inefficient if each “bucket” is hosted by a machine with similar specs. To utilize the hardware fully, you want a mix of less- and more-powerful machines.</p>
+
+<ul>
+<li><p>Binary decision diagram is one of my favorite data structures, or in fact Reduced Ordered Binary Decision Diagram (ROBDD).
+These kind of structures can for instance be used for:</p></li>
+<li><p>Representing sets of items and performing very fast logical operations on those sets.</p></li>
+<li><p>Any boolean expression, with the intention of finding all solutions for the expression</p></li>
+</ul>
+
+
+<p> Note that many problems can be represented as a boolean expression. For instance the solution to a suduku can be expressed as a boolean expression. And building a BDD for that boolean expression will immediately yield the solution(s).</p>
+
+<ul>
+<li>Huffman trees – used for compression.</li>
+<li>Original post</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Python Decorators Step by Step (II)]]></title>
